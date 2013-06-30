@@ -14,8 +14,7 @@
     <link rev="canonical" rel="self alternate shorter shorturl shortlink"
       href="<%= @short_url %>" />
   <% end %>
-  <title><%= @title.present? ? "#{@title} | " : "" %><%=
-    Rails.application.name %></title>
+  <title><%= @title.present? ? "#{@title} | 雨服务" : "雨服务" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -34,20 +33,20 @@
       <div id="headerleft">
         <a id="l_holder" style="background-color: #<%= sprintf("%02x%02x%02x",
         [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) %>;" href="/"
-        title="<%= Rails.application.name %> (<%= @traffic.to_i %>)"></a>
+        title="Lobsters (<%= @traffic.to_i %>)"></a>
 
         <% links = {
-          "/" => "Home",
-          "/newest" => "Newest",
-          "/comments" => "Comments"
+          "/" => "首页",
+          "/newest" => "最新",
+          "/comments" => "评论"
         } %>
 
         <% if @user %>
-          <% links.merge!({ "/threads" => "Your Threads",
-            "/stories/new" => "Submit Story" }) %>
+          <% links.merge!({ "/threads" => "线索",
+            "/stories/new" => "提交报道" }) %>
         <% end %>
 
-        <% links.merge!({ "/search" => "Search" }) %>
+        <% links.merge!({ "/search" => "搜索" }) %>
 
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&
         @heading.present? %>
@@ -68,26 +67,25 @@
         <span class="headerlinks">
         <% if @user %>
           <a href="/filters" <%= @cur_url == "/filters" ?
-            raw("class=\"cur_url\"") : "" %>>Filters</a>
+            raw("class=\"cur_url\"") : "" %>>过滤器</a>
 
           <% if (count = @user.unread_message_count) > 0 %>
             <a href="/messages" class="new_messages <%= @cur_url == "/messages" ?
-              "cur_url" : "" %>"><%= count %> New Message<%= count == 1 ? "" :
-              "s" %></a>
+              "cur_url" : "" %>"><%= count %>条新消息</a>
           <% else %>
             <a href="/messages" <%= @cur_url == "/messages" ?
-              raw("class=\"cur_url\"") : "" %>>Messages</a>
+              raw("class=\"cur_url\"") : "" %>>消息</a>
           <% end %>
 
           <a href="/settings" <%= @cur_url == "/settings" ?
             raw("class=\"cur_url\"") : "" %>><%= @user.username %>
             (<%= @user.karma %>)</a>
 
-          <%= link_to "Logout", { :controller => "login", :action => "logout" },
-            :data => { :confirm => "Are you sure you want to logout?" },
+          <%= link_to "退出", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "确定要退出么?" },
             :method => "post" %>
         <% else %>
-          <a href="/login">Login</a>
+          <a href="/login">登录</a>
         <% end %>
         </span>
       </div>

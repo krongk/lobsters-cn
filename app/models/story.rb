@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Story < ActiveRecord::Base
   belongs_to :user
   has_many :taggings,
@@ -32,11 +33,10 @@ class Story < ActiveRecord::Base
 
     has created_at, :sortable => true
     has hotness, is_expired
-    has "(cast(upvotes as int) - cast(downvotes as int))",
-      :as => :score, :type => :integer, :sortable => true
+    has "(upvotes - downvotes)", :as => :score, :type => :integer,
+      :sortable => true
 
     set_property :field_weights => {
-      :upvotes => 15,
       :title => 10,
       :tags => 5,
     }
@@ -48,16 +48,16 @@ class Story < ActiveRecord::Base
     if self.url.present?
       # URI.parse is not very lenient, so we can't use it
 
-      if self.url.match(/\Ahttps?:\/\/([^\.]+\.)+[a-z]+(\/|\z)/)
+      if self.url.match(/\Ahttps?:\/\/([^\.]+\.).*(\/|\z)/)
         if self.new_record? && (s = Story.find_recent_similar_by_url(self.url))
-          errors.add(:url, "has already been submitted recently")
+          errors.add(:url, "该报道已经提交过了")
           self.already_posted_story = s
         end
       else
-        errors.add(:url, "is not valid")
+        errors.add(:url, "无效的链接")
       end
     elsif self.description.to_s.strip == ""
-      errors.add(:description, "must contain text if no URL posted")
+      errors.add(:description, "如果没有链接，内容不能为空")
     end
 
     check_tags
@@ -133,8 +133,7 @@ class Story < ActiveRecord::Base
   end
 
   def log_moderation
-    if self.new_record? || !self.editor_user_id ||
-    self.editor_user_id == self.user_id
+    if self.new_record? || self.editor_user_id == self.user_id
       return
     end
 
@@ -185,9 +184,9 @@ class Story < ActiveRecord::Base
 
     if !self.taggings.reject{|t| t.marked_for_destruction? || t.tag.is_media?
     }.any?
-      errors.add(:base, "Must have at least one non-media (PDF, video) " <<
-        "tag.  If no tags apply to your content, it probably doesn't " <<
-        "belong here.")
+      errors.add(:base, "提交的报道必须包含一个指定的标签， " <<
+        "如果找不到合适的标签标记此文，说明该报道不适合在这里发布，谢谢" <<
+        ".")
     end
   end
 
@@ -229,18 +228,11 @@ class Story < ActiveRecord::Base
       s = Sponge.new
       s.timeout = 3
       @fetched_content = s.fetch(self.url, :get, nil, nil,
-        { "User-agent" => "#{Rails.application.domain} for #{for_remote_ip}" },
-        3)
+        { "User-agent" => "lobste.rs! for #{for_remote_ip}" }, 3)
     rescue
     end
 
     @fetched_content
-  end
-
-  def fetch_story_cache!
-    if self.url.present?
-      self.story_cache = StoryCacher.get_story_text(self.url)
-    end
   end
 
   def calculated_hotness
@@ -282,10 +274,6 @@ class Story < ActiveRecord::Base
   def description=(desc)
     self[:description] = desc.to_s.rstrip
     self.markeddown_description = self.generated_markeddown_description
-  end
-
-  def mailing_list_message_id
-    "story.#{short_id}.#{created_at.to_i}@#{Rails.application.domain}"
   end
 
   @_tags_a = []
@@ -332,7 +320,10 @@ class Story < ActiveRecord::Base
   end
 
   def title_as_url
-    u = self.title.downcase.gsub(/[^a-z0-9_-]/, "_")
+    return self.id.to_s 
+    
+    #because of chinese title, I ignore the title as url below:
+    u = self.title.downcase.gsub(/[^a-z0-9_-]/, "_") 
     while u.match(/__/)
       u.gsub!("__", "_")
     end

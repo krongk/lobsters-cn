@@ -3,12 +3,12 @@
 <div class="box">
   <div class="boxline">
   <% if f.object.url_is_editable_by_user?(@user) %>
-    <%= f.label :url, "URL:", :class => "required" %>
+    <%= f.label :url, "链接(URL):", :class => "required" %>
     <%= f.text_field :url, :autocomplete => "off" %>
-    <%= button_tag "Fetch Title", :id => "story_fetch_title",
+    <%= button_tag "获取标题", :id => "story_fetch_title",
       :type => "button" %>
   <% elsif !f.object.new_record? && !f.object.url.blank? %>
-    <%= f.label :url, "URL:", :class => "required" %>
+    <%= f.label :url, "链接(URL):", :class => "required" %>
     <div class="d">
     <a href="<%= f.object.url %>"><%= f.object.url %></a>
     </div>
@@ -16,12 +16,12 @@
   </div>
 
   <div class="boxline">
-    <%= f.label :title, "Title:", :class => "required" %>
+    <%= f.label :title, "标题:", :class => "required" %>
     <%= f.text_field :title, :maxlength => 100, :autocomplete => "off"  %>
   </div>
 
   <div class="boxline" style="margin-bottom: 2px;">
-  <%= f.label :tags_a, "Tags:", :class => "required",
+  <%= f.label :tags_a, "标签:", :class => "required",
     :style => "line-height: 2.3em;" %>
   <%= f.select "tags_a", options_for_select(
     Tag.all_with_filtered_counts_for(@user).map{|t|
@@ -34,9 +34,9 @@
   </div>
 
   <div class="boxline">
-    <%= f.label :description, "Text:", :class => "required" %>
+    <%= f.label :description, "内容:", :class => "required" %>
     <%= f.text_area :description, :rows => 15,
-      :placeholder => "Optional when submitting a URL; please see guidelines",
+      :placeholder => "如果分享链接(URL),则可选填; 请参考下面的使用教程",
       :autocomplete => "off" %>
   </div>
 </div>

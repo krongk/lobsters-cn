@@ -1,11 +1,12 @@
+#encoding: utf-8
 class UsersController < ApplicationController
   def show
     @showing_user = User.find_by_username!(params[:id])
-    @title = "User #{@showing_user.username}"
+    @title = "会员 #{@showing_user.username}"
   end
 
   def tree
-    @title = "Users"
+    @title = "会员树"
 
     parents = {}
     karmas = {}
@@ -36,6 +37,6 @@ class UsersController < ApplicationController
   end
 
   def invite
-    @title = "Pass Along an Invitation"
+    @title = "邀请"
   end
 end

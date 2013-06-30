@@ -1,6 +1,6 @@
 <div class="box" id="story_box">
   <div class="legend">
-    Submit a Story
+    提交一个报道
   </div>
 
   <div id="story_holder">
@@ -13,56 +13,43 @@
       <div class="box">
         <div class="boxline markdown_help_toggler">
           <a href="#" id="story_guidelines_toggler">
-            Story submission guidelines
+            使用教程
           </a>
           <div id="story_guidelines" style="<%= @user &&
           @user.stories_submitted_count > 2 ? "display: none;" : "" %>">
             <div style="float: right;">
             <a href="javascript:window.location=%22<%= root_url %>stories/new?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)"
             style="border: 1px solid #ddd; padding: 0.5em; background-color:
-            #f8f8f8; line-height: 1.5em; margin-left: 1em;">Submit to
-            <%= Rails.application.name %></a>
+            #f8f8f8; line-height: 1.5em; margin-left: 1em;">提交到雨服务</a>
             </div>
             <ul>
 
             <li>
             <p>
-            To be able to easily submit a page you're viewing in your browser
-            to <%= Rails.application.name %>, drag the bookmarklet to the right
-            to your bookmark bar.  You'll be taken to this page with the viewed
-            page's URL and title.
+              为了方便提交报道，你可将右边的按钮拖当浏览器的书签栏。 
+              (Chrome浏览器，快捷键Ctrl+Shift+B将显示标签；IE浏览器通过快捷键Ctrl+Shift+I打开书签栏)；在要报道的页面，点击书签“提交的雨服务”，将直接打开雨服务提交页面，且已经自动获取到了地址和标题。
             </p>
 
             <li><p>
-              When submitting a URL, the text field is optional and should only
-              be used when additional context or explanation of the URL is
-              needed.  Commentary or opinion should be reserved for a comment,
-              so that it can be voted on separately from the story.
+              两种情况：<br>
+              一种是在雨服务分享文章，这需要提供原文章的链接(URL)和标题，内容部分可选填。<br>
+              一种是在雨服务发表文章，这种情况下，不需要提交链接(URL), 只需要提交标题和内容。
               </p></li>
 
             <li><p>
-              Do not editorialize story titles, but when the original story's
-              title has no context or is unclear, please change it.  Please
-              remove extraneous components from titles such as the name of the
-              site or section.
+              标题是内容的概括，切题的标题能吸引真正感兴趣的用户，影响到报道的评分效果.
               </p></li>
 
             <li><p>
-              If no tags clearly apply to the story you are submitting, chances
-              are it does not belong here.  Do not overreach with tags if they
-              are not the primary focus of the story.
+              标签是不选项；如果没有合适的标签来标记你报道的文章，说明此文章不适合在这里发表，为了保证阅读的质量，最好不要滥竽充数.
               </p></li>
 
             <li><p>
-              When the story being submitted is more than a year or so old,
-              please add the year the story was written to the post title in
-              parentheses.
+              如果报道的内容是很久的内容(一年多前的，或更久)， 最好在标题前用括号加一个年份.
               </p></li>
 
             <li><p>
-              If you submit a URL that matches one already posted within the
-              past 30 days, your submission will be turned into an upvote on
-              the previous story and you will be redirected to it.
+              如果你提交的报道在30天内已经被提交过了的，则程序会自动跳转到上次报道页面，避免重复提交。
               </p>
 
             </ul>
@@ -75,13 +62,13 @@
       <div class="box">
         <div class="boxline markdown_help_toggler">
           <div class="markdown_help_label">
-            Markdown formatting available
+            Markdown 语法介绍
           </div>
 
-          <%= submit_tag "Submit" %>
+          <%= submit_tag "提交" %>
 
           &nbsp;
-          <button type="button" class="story-preview">Preview</button>
+          <button type="button" class="story-preview">预览</button>
 
           <div style="clear: both;"></div>
 

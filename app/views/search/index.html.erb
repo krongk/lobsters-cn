@@ -1,47 +1,47 @@
 <div class="box">
   <div class="legend">
-    Search
+    站内搜索
   </div>
 
   <%= form_tag "/search", :method => :get do %>
     <div class="boxline">
       <%= text_field_tag "q", @search.q, { :size => 40 }.
         merge(@search.q.present? ? {} : { :autofocus => "autofocus" }) %>
-      <input type="submit" value="Search">
+      <input type="submit" value="搜索">
     </div>
 
     <div class="boxline">
-      <label class="required">Include:</label>
+      <label class="required">包含:</label>
 
       <%= radio_button_tag "what", "all", @search.what == "all" %>
-        <label for="search_what_all" class="normal">All</label>
+        <label for="search_what_all" class="normal">所有</label>
 
       &nbsp;
 
       <%= radio_button_tag "what", "stories", @search.what == "stories" %>
-        <label for="search_what_stories" class="normal">Stories</label>
+        <label for="search_what_stories" class="normal">报道</label>
 
       &nbsp;
 
       <%= radio_button_tag "what", "comments", @search.what == "comments" %>
-        <label for="search_what_comments" class="normal">Comments</label>
+        <label for="search_what_comments" class="normal">评论</label>
 
       <br>
 
-      <label class="required">Order By:</label>
+      <label class="required">排序:</label>
 
       <%= radio_button_tag "order", "relevance", @search.order == "relevance" %>
-        <label for="search_order_relevance" class="normal">Relevance</label>
+        <label for="search_order_relevance" class="normal">相关性</label>
 
       &nbsp;
 
       <%= radio_button_tag "order", "newest", @search.order == "newest" %>
-        <label for="search_order_newest" class="normal">Newest</label>
+        <label for="search_order_newest" class="normal">最新</label>
 
       &nbsp;
 
       <%= radio_button_tag "order", "points", @search.order == "points" %>
-        <label for="search_order_points" class="normal">Points</label>
+        <label for="search_order_points" class="normal">积分</label>
     </div>
   <% end %>
 </div>
@@ -50,8 +50,7 @@
   <div class="box">
     <p>
     <div class="legend">
-      <%= @search.total_results %> result<%= @search.total_results == 1 ? "" :
-        "s" %> for "<%= @search.q %>"
+      您搜索问题："<%= @search.q %>"获得了<%= @search.total_results %>条结果, 
     </div>
     </p>
   </div>
@@ -71,7 +70,7 @@
 
   <% if @search.total_results > @search.per_page %>
     <div class="page_link_buttons">
-      Page:
+      分页:
 
       <% (@search.total_results.to_f / @search.per_page.to_f).ceil.
       times do |p| %>

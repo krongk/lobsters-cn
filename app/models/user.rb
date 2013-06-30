@@ -14,31 +14,22 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  validates :email, :format => { :with => /\A[^@ ]+@[^@ ]+\.[^@ ]+\Z/ },
-    :uniqueness => { :case_sensitive => false }
+  #chinese:　\u4E00-\u9FFF
+  validates_format_of :username, :with => /\A[A-Za-z0-9\u4E00-\u9FFF][\u4E00-\u9FFFA-Za-z0-9_-]*\Z/
+  validates_uniqueness_of :username, :case_sensitive => false
 
-  validates :password, :presence => true, :on => :create
+  validates_format_of :email, :with => /\A[^@ ]+@[^@ ]+\.[^@ ]+\Z/
+  validates_uniqueness_of :email, :case_sensitive => false
 
-  validates :username, :format => { :with => /\A[A-Za-z0-9][A-Za-z0-9_-]*\Z/ },
-    :uniqueness => { :case_sensitive => false }
-
-  validates_each :username do |record,attr,value|
-    if BANNED_USERNAMES.include?(value.to_s.downcase)
-      record.errors.add(attr, "is not permitted")
-    end
-  end
+  validates_presence_of :password, :on => :create
 
   attr_accessible :username, :email, :password, :password_confirmation,
     :about, :email_replies, :pushover_replies, :pushover_user_key,
     :pushover_device, :email_messages, :pushover_messages, :email_mentions,
-    :pushover_mentions, :mailing_list_enabled
+    :pushover_mentions
 
   before_save :check_session_token
-  before_create :create_rss_token, :create_mailing_list_token
-  after_create :create_default_tag_filters
-
-  BANNED_USERNAMES = [ "admin", "administrator", "hostmaster", "mailer-daemon",
-    "postmaster", "root", "security", "support", "webmaster", ]
+  after_create :create_default_tag_filters, :create_rss_token
 
   def as_json(options = {})
     h = super(:only => [
@@ -76,12 +67,6 @@ class User < ActiveRecord::Base
   def create_rss_token
     if self.rss_token.blank?
       self.rss_token = Utils.random_str(60)
-    end
-  end
-
-  def create_mailing_list_token
-    if self.mailing_list_token.blank?
-      self.mailing_list_token = Utils.random_str(10)
     end
   end
 
@@ -133,7 +118,7 @@ class User < ActiveRecord::Base
 
   def linkified_about
     # most users are probably mentioning "@username" to mean a twitter url, not
-    # a link to a profile on this site
+    # a link to a lobste.rs profile
     Markdowner.to_html(self.about, { :disable_profile_links => true })
   end
 

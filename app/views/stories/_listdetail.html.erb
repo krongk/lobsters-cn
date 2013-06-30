@@ -20,8 +20,8 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
         <a href="<%= story.url_or_comments_url %>"><%= story.title %></a>
       <% end %>
       <% if story.is_gone? %>
-        [Story removed by <%= story.is_moderated? ? "moderator" :
-          "original submitter" %>]
+        [此报道已被 <%= story.is_moderated? ? "会长" :
+          "原发布者" %>删除]
       <% end %>
     </span>
     <% if story.can_be_seen_by_user?(@user) %>
@@ -37,40 +37,40 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
     <% end %>
     <div class="byline">
       <% if story.previewing %>
-        by <a><%= story.user.username %></a>
-        just now
+        我<a><%= story.user.username %></a>
+        刚刚
       <% else %>
-        by <a href="/u/<%= story.user.username %>"><%= story.user.username
+        <a href="/u/<%= story.user.username %>"><%= story.user.username
           %></a> <%= raw(time_ago_in_words_label(story.created_at).
-          gsub(/^about /, "")) %> ago
+          gsub(/^about /, "")) %>
 
         <% if story.is_editable_by_user?(@user) %>
           |
-          <a href="<%= edit_story_url(story.short_id) %>">edit</a>
+          <a href="<%= edit_story_url(story.short_id) %>">编辑</a>
 
           <% if story.is_gone? && story.is_undeletable_by_user?(@user) %>
             |
-            <%= link_to "undelete", story_undelete_url(story.short_id),
+            <%= link_to "恢复", story_undelete_url(story.short_id),
               :method => :post, :data => {
-              :confirm => "Are you sure you want to undelete this story?" } %>
+              :confirm => "确定恢复此报道?" } %>
           <% elsif !story.is_gone? %>
             |
             <% if story.user_id != @user.try(:id) &&
             @user.try(:is_moderator?) %>
-              <%= link_to "delete", story_url(story.short_id),
+              <%= link_to "删除", story_url(story.short_id),
                 :method => :delete, :class => "mod_story_link" %>
             <% else %>
-              <%= link_to "delete", story_url(story.short_id),
+              <%= link_to "删除", story_url(story.short_id),
                 :method => :delete, :data => {
-                :confirm => "Are you sure you want to delete this story?" } %>
+                :confirm => "确定要删除此报道?" } %>
             <% end %>
           <% end %>
         <% end %>
         <% if !story.is_gone? %>
           |
           <a href="<%= story.comments_url %>"><%=
-            (c = story.comment_count) == 0 ? "discuss" :
-            "#{c} comment#{c == 1 ? "" : "s"}" %></a>
+            (c = story.comment_count) == 0 ? "评论" :
+            "#{c} 条评论#{c == 1 ? "" : ""}" %></a>
         <% end %>
 
         <% if defined?(single_story) && single_story %>

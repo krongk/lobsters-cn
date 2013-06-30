@@ -1,19 +1,18 @@
 <div class="box wide">
   <div class="legend">
-		Filtered Tags
+		过滤标签
 	</div>
 
   <p>
-  To hide stories from the home page that have been tagged with certain tags,
-  check them below.
+  通过隐藏标签，过滤你不感兴趣的内容。
   </p>
 
   <%= form_tag "/filters", :method => :post do %>
     <table class="data zebra" cellspacing=0 width="75%">
     <tr>
-      <th width="7%">Hide</th>
-      <th width="15%">Tag</th>
-      <th width="78%">Description</th>
+      <th width="7%">隐藏</th>
+      <th width="15%">标签</th>
+      <th width="78%">描述</th>
     </tr>
     <% Tag.order(:tag).accessible_to(@user).each do |tag| %>
       <tr>
@@ -30,7 +29,7 @@
     <% end %>
     </table>
     <p>
-    <%= submit_tag "Save Filters" %>
+    <%= submit_tag "保存过滤器" %>
     </p>
   <% end %>
 </div>

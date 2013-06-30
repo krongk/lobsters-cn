@@ -1,57 +1,54 @@
 <div class="box wide">
   <div class="legend right">
-		<a href="/u/<%= @user.username %>">View Profile</a>
+		<a href="/u/<%= @user.username %>">个人资料</a>
   </div>
 	<div class="legend">
-		Account Settings
+		账户设置
 	</div>
 
   <%= form_for @edit_user, :url => settings_url, :method => :post do |f| %>
     <%= error_messages_for f.object %>
 
     <div class="boxline">
-      <%= f.label :username, "Username:", :class => "required" %>
+      <%= f.label :username, "用户名:", :class => "required" %>
       <%= f.text_field :username, :size => 15 %>
-      <span class="hint">
-        <tt>[A-Za-z0-9][A-Za-z0-9_-]*</tt>
-      </span>
     </div>
 
     <div class="boxline">
-      <%= f.label :password, "New Password:", :class => "required" %>
+      <%= f.label :password, "新密码:", :class => "required" %>
       <%= f.password_field :password, :size => 40 %>
     </div>
 
     <div class="boxline">
-      <%= f.label :password_confirmation, "Confirm Password:",
+      <%= f.label :password_confirmation, "密码确认:",
         :class => "required" %>
       <%= f.password_field :password_confirmation, :size => 40 %>
     </div>
 
     <div class="boxline">
-      <%= f.label :email, "E-mail Address:", :class => "required" %>
+      <%= f.label :email, "E-mail:", :class => "required" %>
       <%= f.text_field :email, :size => 40 %>
       <span class="hint">
-        <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>'ized
+        <a href="http://www.gravatar.com/" target="_blank">Gravatar头像关联</a>
       </span>
     </div>
 
     <div class="boxline">
       <%= f.label :pushover_user_key,
-        raw("<a href=\"https://pushover.net/\">Pushover</a> User Key:"),
+        raw("<a href=\"https://pushover.net/\">Pushover</a> User Key（若有则填）:"),
         :class => "required" %>
       <%= f.text_field :pushover_user_key, :size => 40 %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_device, "Pushover Device:",
+      <%= f.label :pushover_device, "Pushover Device（若有则填）:",
         :class => "required" %>
       <%= f.text_field :pushover_device, :placeholder => "optional",
         :size => 15 %>
     </div>
 
     <div class="boxline">
-      <%= f.label :about, "About:", :class => "required" %>
+      <%= f.label :about, "自我描述:", :class => "required" %>
       <%= f.text_area :about, :size => "100x5", :style => "width: 600px;" %>
     </div>
 
@@ -59,7 +56,7 @@
       <div class="boxline markdown_help_toggler" style="margin-left: 9em;
       width: 600px;">
         <div class="markdown_help_label">
-          Markdown formatting available
+          Markdown 文本格式
         </div>
 
         <div style="clear: both;"></div>
@@ -69,96 +66,65 @@
     </div>
 
     <div class="legend">
-      Comment Reply Notification Settings
+     评论回复通知设置
     </div>
 
     <div class="boxline">
-      <%= f.label :email_replies, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_replies, "接收E-mail:", :class => "required" %>
       <%= f.check_box :email_replies %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_replies, "Receive Pushover Alert:",
+      <%= f.label :pushover_replies, "接收 Pushover 提示:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">
-        Requires user key entered above
+        需要 Pushover user key
       </span>
     </div>
 
     <br>
 
     <div class="legend">
-      Comment Mention Notification Settings
+      评论提及通知设置
     </div>
 
     <div class="boxline">
-      <%= f.label :email_mentions, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_mentions, "接收 E-mail:", :class => "required" %>
       <%= f.check_box :email_mentions %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_mentions, "Receive Pushover Alert:",
+      <%= f.label :pushover_mentions, "接收 Pushover 提示:",
         :class => "required" %>
       <%= f.check_box :pushover_mentions %>
       <span class="hint">
-        Requires user key entered above
+        需要 Pushover user key
       </span>
     </div>
 
     <br>
 
     <div class="legend">
-      Private Message Notification Settings
+      私信通知设置
     </div>
 
     <div class="boxline">
-      <%= f.label :email_messages, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_messages, "接收 E-mail:", :class => "required" %>
       <%= f.check_box :email_messages %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_messages, "Receive Pushover Alert:",
+      <%= f.label :pushover_messages, "接收 Pushover 提示:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">
-        Requires user key entered above
+        需要 Pushover user key
       </span>
     </div>
 
     <br>
-
-    <div class="legend">
-      Mailing List Settings
-    </div>
-
-    <p>
-    When enabled, you will receive all newly submitted stories and comments to
-    your e-mail address entered above, except those stories (and their
-    comments) filtered by your <a href="/filters">tag filters</a>.  All e-mail
-    messages will appear to be sent to your private list address shown below
-    which you can filter on, and e-mails you send to that address will be
-    posted under your account on this website.  You should keep your unique
-    list address private to prevent others from posting comments as you.
-    </p>
-
-    <div class="boxline">
-      <%= f.label :mailing_list_enabled, "Receive List E-mails:",
-        :class => "required" %>
-      <%= f.check_box :mailing_list_enabled%>
-    </div>
-
-    <div class="boxline">
-      <%= f.label :pushover_messages, "List Address:",
-        :class => "required" %>
-      <span>
-      <tt><%= Rails.application.shortname %>-<%=
-        @edit_user.mailing_list_token %>@<%= Rails.application.domain %></tt>
-      </span>
-    </div>
-
-    <br>
-    <%= f.submit "Save All Settings" %>
+    <%= f.submit "保存所有设置" %>
   <% end %>
 
   <br>
@@ -166,7 +132,7 @@
 
   <a name="invite"></a>
   <div class="legend">
-		Invite a New User
+		邀请会员
 	</div>
 
   <%= render :partial => "users/invitationform" %>

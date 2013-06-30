@@ -21,12 +21,14 @@ class CommentsController < ApplicationController
       if pc = Comment.find_by_story_id_and_short_id(story.id,
       params[:parent_comment_short_id])
         comment.parent_comment_id = pc.id
-        # needed for carryng along in comment preview form
-        comment.parent_comment_short_id = params[:parent_comment_short_id]
+        comment.parent_comment_short_id = pc.short_id
+        comment.thread_id = pc.thread_id
       else
         return render :json => { :error => "invalid parent comment",
           :status => 400 }
       end
+    else
+      comment.thread_id = Keystore.incremented_value_for("thread_id")
     end
 
     # prevent double-clicks of the post button
@@ -55,6 +57,8 @@ class CommentsController < ApplicationController
           :content_type => "text/html", :locals => { :story => story,
           :comment => Comment.new, :show_comment => comment }
       end
+
+      Countinual.count!("lobsters.comments.submitted", "+1")
     else
       comment.previewing = true
       comment.upvotes = 1

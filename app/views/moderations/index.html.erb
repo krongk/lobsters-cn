@@ -1,13 +1,13 @@
 <div class="box wide">
 	<div class="legend">
-		Moderation Log
+		会员管理日志
 	</div>
 
   <table class="data" width="100%" cellspacing=0>
   <tr>
-    <th width="20%">Date/Time</th>
-    <th width="15%">Moderator</th>
-    <th width="65%">Story/Comment/User, Changes, Reason</th>
+    <th width="20%">日期/时间</th>
+    <th width="15%">会长(Moderator)</th>
+    <th width="65%">事件(Story/Comment/User, Changes, Reason)</th>
   </tr>
   <% bit = 0 %>
   <% @moderations.each do |mod| %>
@@ -41,13 +41,13 @@
 
   <div class="morelink">
     <% if @page && @page > 1 %>
-      <a href="/moderations/page/<%= @page - 1 %>">&lt;&lt; Page
+      <a href="/moderations/page/<%= @page - 1 %>">&lt;&lt; 页
         <%= @page - 1 %></a>
     <% end %>
 
     <% if @page && @page > 1 %>
       |
-      <a href="/moderations/page/<%= @page + 1 %>">Page <%= @page + 1
+      <a href="/moderations/page/<%= @page + 1 %>">页 <%= @page + 1
         %> &gt;&gt;</a>
     <% end %>
   </div>

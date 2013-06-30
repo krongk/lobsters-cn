@@ -1,6 +1,7 @@
+#encoding: utf-8
 class SearchController < ApplicationController
   def index
-    @title = "Search"
+    @title = "搜索"
     @cur_url = "/search"
 
     @search = Search.new

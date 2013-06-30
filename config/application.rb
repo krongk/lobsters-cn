@@ -32,6 +32,10 @@ module Lobsters
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    
+    #config for 'rails-i18n'
+    config.i18n.available_locales = ['zh-CN', :en]
+    config.i18n.default_locale = "zh-CN".to_sym
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -55,33 +59,15 @@ module Lobsters
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-
+  
     config.cache_store = :memory_store
   end
 end
 
-# disable yaml/xml/whatever input parsing
 silence_warnings do
   ActionDispatch::ParamsParser::DEFAULT_PARSERS = {}
 end
 
-# define site name and domain to be used globally, can be overridden in
-# config/initializers/production.rb
-class << Rails.application
-  def domain
-    "lobste.rs"
-  end
-
-  def name
-    "Lobsters"
-  end
-
-  # used as mailing list prefix and countinual prefix, cannot have spaces
-  def shortname
-    name.downcase.gsub(/[^a-z]/, "")
-  end
-end
-
-Rails.application.routes.default_url_options[:host] = Rails.application.domain
+Rails.application.routes.default_url_options[:host] = "lobste.rs"
 
 require "#{Rails.root}/lib/monkey"

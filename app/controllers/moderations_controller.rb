@@ -1,6 +1,6 @@
 class ModerationsController < ApplicationController
   def index
-    @title = "Moderation Log"
+    @title = "会员管理日志"
 
     @pages = Moderation.count
     @page = params[:page] ? params[:page].to_i : 0

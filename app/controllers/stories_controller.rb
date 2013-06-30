@@ -1,3 +1,4 @@
+#encoding: utf-8
 class StoriesController < ApplicationController
   before_filter :require_logged_in_user_or_400,
     :only => [ :upvote, :downvote, :unvote, :preview ]
@@ -8,7 +9,7 @@ class StoriesController < ApplicationController
   before_filter :find_story, :only => [ :destroy, :edit, :undelete, :update ]
 
   def create
-    @title = "Submit Story"
+    @title = "提交报道"
     @cur_url = "/stories/new"
 
     # we don't allow the url to be changed, so we have to set it manually
@@ -20,8 +21,7 @@ class StoriesController < ApplicationController
       Vote.vote_thusly_on_story_or_comment_for_user_because(1, @story.id,
         nil, @user.id, nil)
 
-      Countinual.count!("#{Rails.application.shortname}.stories.submitted",
-        "+1")
+      Countinual.count!("lobsters.stories.submitted", "+1")
 
       return redirect_to @story.comments_url
 
@@ -31,7 +31,7 @@ class StoriesController < ApplicationController
         Vote.vote_thusly_on_story_or_comment_for_user_because(1,
           @story.already_posted_story.id, nil, @user.id, nil)
 
-        flash[:success] = "This URL has already been submitted recently."
+        flash[:success] = "该地址已经添加过了."
 
         return redirect_to @story.already_posted_story.comments_url
       end
@@ -42,7 +42,7 @@ class StoriesController < ApplicationController
 
   def destroy
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "你不能修改此报道."
       return redirect_to "/"
     end
 
@@ -60,11 +60,11 @@ class StoriesController < ApplicationController
 
   def edit
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "你不能修改此报道."
       return redirect_to "/"
     end
 
-    @title = "Edit Story"
+    @title = "修改报道"
   end
 
   def fetch_url_title
@@ -79,7 +79,7 @@ class StoriesController < ApplicationController
   end
 
   def new
-    @title = "Submit Story"
+    @title = "提交报道"
     @cur_url = "/stories/new"
 
     @story = Story.new
@@ -114,7 +114,7 @@ class StoriesController < ApplicationController
     if @story.can_be_seen_by_user?(@user)
       @title = @story.title
     else
-      @title = "[Story removed]"
+      @title = "[报道已被删除]"
     end
 
     @short_url = @story.short_id_url
@@ -144,7 +144,7 @@ class StoriesController < ApplicationController
     @showing_comment = Comment.find_by_short_id(params[:comment_short_id])
 
     if !@showing_comment
-      flash[:error] = "Could not find comment.  It may have been deleted."
+      flash[:error] = "没有找到评论."
       return redirect_to @story.comments_url
     end
 
@@ -181,7 +181,7 @@ class StoriesController < ApplicationController
 
   def update
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "你不能修改此报道."
       return redirect_to "/"
     end
 
@@ -202,7 +202,7 @@ class StoriesController < ApplicationController
 
   def unvote
     if !(story = Story.find_by_short_id(params[:story_id]))
-      return render :text => "can't find story", :status => 400
+      return render :text => "没有找到", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(0, story.id,
@@ -213,7 +213,7 @@ class StoriesController < ApplicationController
 
   def upvote
     if !(story = Story.find_by_short_id(params[:story_id]))
-      return render :text => "can't find story", :status => 400
+      return render :text => "没有找到", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(1, story.id,
@@ -224,7 +224,7 @@ class StoriesController < ApplicationController
 
   def downvote
     if !(story = Story.find_by_short_id(params[:story_id]))
-      return render :text => "can't find story", :status => 400
+      return render :text => "没有找到", :status => 400
     end
 
     if !Vote::STORY_REASONS[params[:reason]]
@@ -247,8 +247,8 @@ private
     end
 
     if !@story
-      flash[:error] = "Could not find story or you are not authorized " <<
-        "to manage it."
+      flash[:error] = "没有找到" <<
+        "."
       redirect_to "/"
       return false
     end

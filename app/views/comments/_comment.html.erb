@@ -19,39 +19,38 @@ class="comment <%= comment.current_vote ? (comment.current_vote[:vote] == 1 ?
 		<div class="byline">
       <% if comment.previewing %>
         <a><%= comment.user.username %></a>
-        previewed
-        just now
+        预览
       <% else %>
         <a href="/u/<%= comment.user.username %>"><%= comment.user.username
           %></a>
 
-        <%= comment.has_been_edited?? "edited" : "" %>
+        <%= comment.has_been_edited?? "编辑" : "" %>
         <%= raw(time_ago_in_words_label(comment.has_been_edited? ?
-          comment.updated_at : comment.created_at).gsub(/^about /, "")) %> ago
+          comment.updated_at : comment.created_at).gsub(/^about /, "")) %>前
       <% end %>
 
       <% if !comment.previewing %>
         |
         <a href="<%= story.comments_url %>/comments/<%= comment.short_id
-          %>">link</a>
+          %>">链接</a>
 
         <% if comment.is_editable_by_user?(@user) %>
           |
-          <a class="comment_editor">edit</a>
+          <a class="comment_editor">编辑</a>
         <% end %>
 
         <% if comment.is_gone? && comment.is_undeletable_by_user?(@user) %>
           |
-          <a class="comment_undeletor">undelete</a>
+          <a class="comment_undeletor">恢复</a>
         <% elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) %>
           |
-          <a class="comment_deletor">delete</a>
+          <a class="comment_deletor">删除</a>
         <% end %>
 
         <% if !story.is_gone? && !comment.is_gone? &&
         !(defined?(show_story) && show_story) %>
             |
-            <a class="comment_replier">reply</a>
+            <a class="comment_replier">回复</a>
         <% end %>
 
         <span class="reason">
@@ -65,7 +64,7 @@ class="comment <%= comment.current_vote ? (comment.current_vote[:vote] == 1 ?
       <% end %>
 
       <% if defined?(show_story) && show_story %>
-        | on:
+        | 评论:
         <a href="<%= story.comments_url %>"><%= story.title %></a>
       <% end %>
 		</div>

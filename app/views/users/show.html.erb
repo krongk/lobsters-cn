@@ -2,7 +2,7 @@
   <div class="legend">
     <%= @showing_user.username %>
     <% if @user %>
-      (<a href="/messages?to=<%= @showing_user.username %>">Send a Message</a>)
+      (<a href="/messages?to=<%= @showing_user.username %>">发送私信</a>)
     <% end %>
   </div>
 
@@ -10,49 +10,49 @@
     <img src="<%= @showing_user.avatar_url %>">
   </div>
 
-  <label class="required">Status:</label>
+  <label class="required">状态:</label>
   <span class="d">
-    Active <%= @showing_user.is_admin? ? "administrator" :
-      (@showing_user.is_moderator? ? "moderator" : "user") %>
+     <%= @showing_user.is_admin? ? "管理员" :
+      (@showing_user.is_moderator? ? "会长" : "会员") %>
   </span>
   <br>
 
-  <label class="required">Joined:</label>
+  <label class="required">加入时间:</label>
   <span class="d">
     <%= raw(time_ago_in_words_label(@showing_user.created_at)) %>
     <% if @showing_user.invited_by_user %>
-      ago, invited by
+      前, 受邀于
       <a href="/u/<%= @showing_user.invited_by_user.username %>"><%=
         @showing_user.invited_by_user.username %></a>
     <% else %>
-      ago
+      前
     <% end %>
   </span>
   <br>
 
-  <label class="required">Karma:</label>
+  <label class="required">贡献(Karma):</label>
   <span class="d">
     <%= @showing_user.karma %>
-    (average <%= number_with_precision(@showing_user.average_karma,
+    (平均 <%= number_with_precision(@showing_user.average_karma,
       :precision => 2) %>)
   </span>
   <br>
 
-  <label class="required">Stories Submitted:</label>
+  <label class="required">提交报道:</label>
   <span class="d">
     <a href="/newest/<%= @showing_user.username %>"><%=
       @showing_user.stories_submitted_count %></a>
   </span>
   <br>
 
-  <label class="required">Comments Posted:</label>
+  <label class="required">发表评论:</label>
   <span class="d">
     <a href="/threads/<%= @showing_user.username %>"><%=
       @showing_user.comments_posted_count %></a>
   </span>
   <br>
 
-  <label class="required">About:</label>
+  <label class="required">自我介绍:</label>
 
   <div id="user_about" class="shorten_first_p">
     <%= raw @showing_user.linkified_about %>

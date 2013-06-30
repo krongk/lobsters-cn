@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :story
@@ -13,10 +14,9 @@ class Comment < ActiveRecord::Base
   attr_accessor :parent_comment_short_id, :current_vote, :previewing,
     :indent_level, :highlighted
 
-  before_create :assign_short_id_and_upvote, :assign_initial_confidence,
-    :assign_thread_id
+  before_create :assign_short_id_and_upvote, :assign_initial_confidence
   after_create :assign_votes, :mark_submitter, :deliver_reply_notifications,
-    :deliver_mention_notifications, :log_to_countinual
+    :deliver_mention_notifications
   after_destroy :unassign_votes
 
   MAX_EDIT_MINS = 45
@@ -117,7 +117,7 @@ class Comment < ActiveRecord::Base
         self.moderation.try(:moderator).try(:username).to_s << ": " <<
         (self.moderation.try(:reason) || "No reason given")
     else
-      "Comment removed by author"
+      "评论已被移除"
     end
   end
 
@@ -139,8 +139,8 @@ class Comment < ActiveRecord::Base
 
           if u.pushover_mentions? && u.pushover_user_key.present?
             Pushover.push(u.pushover_user_key, u.pushover_device, {
-              :title => "#{Rails.application.name} mention by " <<
-                "#{self.user.username} on #{self.story.title}",
+              :title => "Lobsters mention by #{self.user.username} on " <<
+                self.story.title,
               :message => self.plaintext_comment,
               :url => self.url,
               :url_title => "Reply to #{self.user.username}",
@@ -164,8 +164,8 @@ class Comment < ActiveRecord::Base
 
         if u.pushover_replies? && u.pushover_user_key.present?
           Pushover.push(u.pushover_user_key, u.pushover_device, {
-            :title => "#{Rails.application.name} reply from " <<
-              "#{self.user.username} on #{self.story.title}",
+            :title => "Lobsters reply from #{self.user.username} on " <<
+              "#{self.story.title}",
             :message => self.plaintext_comment,
             :url => self.url,
             :url_title => "Reply to #{self.user.username}",
@@ -176,10 +176,6 @@ class Comment < ActiveRecord::Base
           "#{u.username}: #{e.message}"
       end
     end
-  end
-
-  def log_to_countinual
-    Countinual.count!("#{Rails.application.shortname}.comments.submitted", "+1")
   end
 
   def delete_for_user(user)
@@ -259,14 +255,6 @@ class Comment < ActiveRecord::Base
     self.confidence = self.calculated_confidence
   end
 
-  def assign_thread_id
-    if self.parent_comment_id.present?
-      self.thread_id = self.parent_comment.thread_id
-    else
-      self.thread_id = Keystore.incremented_value_for("thread_id")
-    end
-  end
-
   def unassign_votes
     self.story.update_comment_count!
   end
@@ -284,17 +272,13 @@ class Comment < ActiveRecord::Base
     self.markeddown_comment = self.generated_markeddown_comment
   end
 
-  def has_been_edited?
-    self.updated_at && (self.updated_at - self.created_at > 1.minute)
-  end
-
-  def mailing_list_message_id
-    "comment.#{short_id}.#{created_at.to_i}@#{Rails.application.domain}"
-  end
-
   def plaintext_comment
     # TODO: linkify then strip tags and convert entities back
     comment
+  end
+
+  def has_been_edited?
+    self.updated_at && (self.updated_at - self.created_at > 1.minute)
   end
 
   def self.ordered_for_story_or_thread_for_user(story_id, thread_id, user)
