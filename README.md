@@ -1,3 +1,5 @@
+###This is a Chinese version of Lobsters. Lobsters µÄÖĞÎÄ·­Òë°æ¡£
+
 ###Lobsters Rails Project
 
 This is the source code to the site operating at
