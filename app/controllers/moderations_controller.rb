@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ModerationsController < ApplicationController
   def index
     @title = "会员管理日志"

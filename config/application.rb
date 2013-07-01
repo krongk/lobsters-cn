@@ -61,6 +61,15 @@ module Lobsters
     config.assets.version = '1.0'
   
     config.cache_store = :memory_store
+
+    #hacker to load config/application.yml
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'application.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
+
   end
 end
 
@@ -68,6 +77,6 @@ silence_warnings do
   ActionDispatch::ParamsParser::DEFAULT_PARSERS = {}
 end
 
-Rails.application.routes.default_url_options[:host] = "lobste.rs"
+#Rails.application.routes.default_url_options[:host] = "lobste.rs"
 
 require "#{Rails.root}/lib/monkey"

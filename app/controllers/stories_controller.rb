@@ -168,7 +168,7 @@ class StoriesController < ApplicationController
   def undelete
     if !(@story.is_editable_by_user?(@user) &&
     @story.is_undeletable_by_user?(@user))
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "没有权限."
       return redirect_to "/"
     end
 
@@ -228,7 +228,7 @@ class StoriesController < ApplicationController
     end
 
     if !Vote::STORY_REASONS[params[:reason]]
-      return render :text => "invalid reason", :status => 400
+      return render :text => "无效的内容", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(-1, story.id,

@@ -4,7 +4,7 @@ class SignupController < ApplicationController
 
   def index
     if @user
-      flash[:error] = "You are already signed up."
+      flash[:error] = "你已经登录了."
       return redirect_to "/"
     end
 
@@ -13,16 +13,16 @@ class SignupController < ApplicationController
 
   def invited
     if @user
-      flash[:error] = "You are already signed up."
+      flash[:error] = "你已经登录了."
       return redirect_to "/"
     end
 
     if !(@invitation = Invitation.find_by_code(params[:invitation_code].to_s))
-      flash[:error] = "Invalid or expired invitation"
+      flash[:error] = "邀请码无效，或者已过期"
       return redirect_to "/signup"
     end
 
-    @title = "Signup"
+    @title = "注册"
 
     @new_user = User.new
     @new_user.email = @invitation.email
@@ -32,11 +32,11 @@ class SignupController < ApplicationController
 
   def signup
     if !(@invitation = Invitation.find_by_code(params[:invitation_code].to_s))
-      flash[:error] = "Invalid or expired invitation."
+      flash[:error] = "邀请码无效，或者已过期."
       return redirect_to "/signup"
     end
 
-    @title = "Signup"
+    @title = "注册"
 
     @new_user = User.new(params[:user])
     @new_user.invited_by_user_id = @invitation.user_id
@@ -44,7 +44,7 @@ class SignupController < ApplicationController
     if @new_user.save
       @invitation.destroy
       session[:u] = @new_user.session_token
-      flash[:success] = "Welcome to Lobsters, #{@new_user.username}!"
+      flash[:success] = "欢迎, #{@new_user.username}!"
 
       Countinual.count!("lobsters.users.created", "+1")
 

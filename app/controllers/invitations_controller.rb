@@ -1,3 +1,4 @@
+#encoding: utf-8
 class InvitationsController < ApplicationController
   before_filter :require_logged_in_user
 
@@ -7,18 +8,18 @@ class InvitationsController < ApplicationController
     i.email = params[:email]
     i.memo = params[:memo]
 
-    begin
+   # begin
       if i.save
         i.send_email
-        flash[:success] = "Successfully e-mailed invitation to " <<
+        flash[:success] = "邮件成功发送到了：" <<
           params[:email].to_s << "."
       else
-        raise
+      #  raise
       end
-    rescue
-      flash[:error] = "Could not send invitation, verify the e-mail " <<
-        "address is valid."
-    end
+    # rescue
+    #   flash[:error] = "邀请失败，请检查邮箱地址是否正确" <<
+    #     "."
+    # end
 
     if params[:return_home]
       return redirect_to "/"

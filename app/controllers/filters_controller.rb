@@ -1,9 +1,10 @@
+#encoding: utf-8
 class FiltersController < ApplicationController
   before_filter :require_logged_in_user
 
   def index
     @cur_url = "/filters"
-    @title = "Filtered Tags"
+    @title = "过滤器"
 
     @filtered_tags = @user.tag_filters.reload
 
@@ -35,7 +36,7 @@ class FiltersController < ApplicationController
       tf.save
     end
 
-    flash.now[:success] = "Your filters have been updated."
+    flash.now[:success] = "过滤器更新成功."
     index
   end
 end

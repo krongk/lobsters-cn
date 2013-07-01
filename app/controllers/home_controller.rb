@@ -1,3 +1,4 @@
+#encoding: utf-8
 class HomeController < ApplicationController
   STORIES_PER_PAGE = 25
 
@@ -19,7 +20,7 @@ class HomeController < ApplicationController
       format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
-          @title = "Private feed for #{@user.username}"
+          @title = "#{@user.username}"
         end
 
         render :action => "rss", :layout => false
@@ -32,7 +33,7 @@ class HomeController < ApplicationController
     @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
       nil, true, nil)
 
-    @heading = @title = "Newest Stories"
+    @heading = @title = "最新报道"
     @cur_url = "/newest"
 
     @rss_link = "<link rel=\"alternate\" type=\"application/rss+xml\" " <<
@@ -45,7 +46,7 @@ class HomeController < ApplicationController
       format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
-          @title += " - Private feed for #{@user.username}"
+          @title += " - #{@user.username}"
         end
 
         render :action => "rss", :layout => false
@@ -60,7 +61,7 @@ class HomeController < ApplicationController
     @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
       nil, false, for_user.id)
 
-    @heading = @title = "Newest Stories by #{for_user.username}"
+    @heading = @title = "#{for_user.username}的最新报道"
     @cur_url = "/newest/#{for_user.username}"
 
     @newest = true

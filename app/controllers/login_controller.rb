@@ -1,3 +1,4 @@
+#encoding: utf-8
 class LoginController < ApplicationController
   before_filter :authenticate_user
 
@@ -10,7 +11,7 @@ class LoginController < ApplicationController
   end
 
   def index
-    @title = "Login"
+    @title = "登录"
     render :action => "index"
   end
 
@@ -22,12 +23,12 @@ class LoginController < ApplicationController
       return redirect_to "/"
     end
 
-    flash.now[:error] = "Invalid e-mail address and/or password."
+    flash.now[:error] = "无效的用户名或密码。"
     index
   end
 
   def forgot_password
-    @title = "Reset Password"
+    @title = "密码重置"
     render :action => "forgot_password"
   end
 
@@ -36,14 +37,14 @@ class LoginController < ApplicationController
       params[:email].to_s).first
 
     if !@found_user
-      flash.now[:error] = "Invalid e-mail address or username."
+      flash.now[:error] = "无效的用户名或密码。"
       return forgot_password
     end
 
     @found_user.initiate_password_reset_for_ip(request.remote_ip)
 
-    flash.now[:success] = "Password reset instructions have been e-mailed " <<
-      "to you."
+    flash.now[:success] = "密码重置已经发送到您邮箱，" <<
+      "请检查."
     return index
   end
 
@@ -52,8 +53,8 @@ class LoginController < ApplicationController
 
     if params[:token].blank? ||
     !(@reset_user = User.find_by_password_reset_token(params[:token].to_s))
-      flash[:error] = "Invalid reset token.  It may have already been " <<
-        "used or you may have copied it incorrectly."
+      flash[:error] = "无效的会话，请确认该链接是否已经使用过了，或者您没有完全到浏览器 " <<
+        "."
       return redirect_to forgot_password_url
     end
 

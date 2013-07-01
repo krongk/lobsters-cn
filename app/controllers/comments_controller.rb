@@ -1,3 +1,4 @@
+#encoding: utf-8
 class CommentsController < ApplicationController
   COMMENTS_PER_PAGE = 20
 
@@ -9,7 +10,7 @@ class CommentsController < ApplicationController
 
   def create
     if !(story = Story.find_by_short_id(params[:story_id])) || story.is_gone?
-      return render :text => "can't find story", :status => 400
+      return render :text => "没有找到报道文章", :status => 400
     end
 
     comment = Comment.new
@@ -24,7 +25,7 @@ class CommentsController < ApplicationController
         comment.parent_comment_short_id = pc.short_id
         comment.thread_id = pc.thread_id
       else
-        return render :json => { :error => "invalid parent comment",
+        return render :json => { :error => "无效的父级评论",
           :status => 400 }
       end
     else
@@ -36,8 +37,8 @@ class CommentsController < ApplicationController
     (pc = Comment.find_by_story_id_and_user_id_and_parent_comment_id(story.id,
     @user.id, comment.parent_comment_id))
       if (Time.now - pc.created_at) < 5.minutes
-        comment.errors.add(:comment, "^You have already posted a comment " <<
-          "here recently.")
+        comment.errors.add(:comment, "^你刚刚已经提交了一条评论" <<
+          ".")
 
         return render :partial => "commentbox", :layout => false,
           :content_type => "text/html", :locals => { :story => story,
@@ -115,7 +116,7 @@ class CommentsController < ApplicationController
   def update
     if !((comment = Comment.find_by_short_id(params[:comment_id])) &&
     comment.is_editable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "没有找到相关评论", :status => 400
     end
 
     comment.comment = params[:comment]
@@ -139,7 +140,7 @@ class CommentsController < ApplicationController
   def preview
     if !((comment = Comment.find_by_short_id(params[:comment_id])) &&
     comment.is_editable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "没有找到相关评论", :status => 400
     end
 
     comment.comment = params[:comment]
@@ -154,7 +155,7 @@ class CommentsController < ApplicationController
 
   def unvote
     if !(comment = Comment.find_by_short_id(params[:comment_id]))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "没有找到相关评论", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(0, comment.story_id,
@@ -165,7 +166,7 @@ class CommentsController < ApplicationController
 
   def upvote
     if !(comment = Comment.find_by_short_id(params[:comment_id]))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "没有找到相关评论", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(1, comment.story_id,
@@ -176,11 +177,11 @@ class CommentsController < ApplicationController
 
   def downvote
     if !(comment = Comment.find_by_short_id(params[:comment_id]))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "没有找到相关评论", :status => 400
     end
 
     if !Vote::COMMENT_REASONS[params[:reason]]
-      return render :text => "invalid reason", :status => 400
+      return render :text => "无效的理由", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(-1, comment.story_id,
@@ -194,7 +195,7 @@ class CommentsController < ApplicationController
       "title=\"RSS 2.0\" href=\"/comments.rss" <<
       (@user ? "?token=#{@user.rss_token}" : "") << "\" />"
 
-    @heading = @title = "Newest Comments"
+    @heading = @title = "最新评论"
     @cur_url = "/comments"
 
     @page = 1
@@ -225,14 +226,14 @@ class CommentsController < ApplicationController
   def threads
     if params[:user]
       @showing_user = User.find_by_username!(params[:user])
-      @heading = @title = "Threads for #{@showing_user.username}"
+      @heading = @title = "#{@showing_user.username}的线索"
       @cur_url = "/threads/#{@showing_user.username}"
     elsif !@user
       # TODO: show all recent threads
       return redirect_to "/login"
     else
       @showing_user = @user
-      @heading = @title = "Your Threads"
+      @heading = @title = "线索"
       @cur_url = "/threads"
     end
 

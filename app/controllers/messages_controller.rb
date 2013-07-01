@@ -1,10 +1,11 @@
+#encoding: utf-8
 class MessagesController < ApplicationController
   before_filter :require_logged_in_user
   before_filter :find_message, :only => [ :show, :destroy, :keep_as_new ]
 
   def index
     @cur_url = "/messages"
-    @title = "Messages"
+    @title = "消息"
 
     @new_message = Message.new
 
@@ -18,7 +19,7 @@ class MessagesController < ApplicationController
 
   def sent
     @cur_url = "/messages"
-    @title = "Messages Sent"
+    @title = "发送消息"
 
     @direction = :out
     @messages = @user.undeleted_sent_messages
@@ -30,7 +31,7 @@ class MessagesController < ApplicationController
 
   def create
     @cur_url = "/messages"
-    @title = "Messages"
+    @title = "消息"
 
     @new_message = Message.new(params[:message])
     @new_message.author_user_id = @user.id
@@ -39,7 +40,7 @@ class MessagesController < ApplicationController
     @messages = @user.undeleted_received_messages
 
     if @new_message.save
-      flash[:success] = "Your message has been sent to " <<
+      flash[:success] = "消息成功发送给了" <<
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
@@ -63,7 +64,7 @@ class MessagesController < ApplicationController
     if @message.subject.match(/^re:/i)
       @new_message.subject = @message.subject
     else
-      @new_message.subject = "Re: #{@message.subject}"
+      @new_message.subject = "回复: #{@message.subject}"
     end
   end
 
@@ -78,7 +79,7 @@ class MessagesController < ApplicationController
 
     @message.save!
 
-    flash[:success] = "Deleted message."
+    flash[:success] = "消息已删除."
 
     if @message.author_user_id == @user.id
       return redirect_to "/messages/sent"
@@ -103,7 +104,7 @@ private
       end
     end
 
-    flash[:error] = "Could not find message."
+    flash[:error] = "没有找到任何消息."
     redirect_to "/messages"
     return false
   end

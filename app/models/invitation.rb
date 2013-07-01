@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Invitation < ActiveRecord::Base
   belongs_to :user
 
@@ -5,7 +6,7 @@ class Invitation < ActiveRecord::Base
 
   validate do
     unless email.to_s.match(/\A[^@ ]+@[^ @]+\.[^ @]+\z/)
-      errors.add(:email, "is not valid")
+      errors.add(:email, "无效的邮箱地址")
     end
   end
 
