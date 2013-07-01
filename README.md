@@ -1,9 +1,10 @@
 ###This is a Chinese version of Lobsters. 
 
-The original git source: [https://github.com/jcs/lobsters](https://github.com/jcs/lobsters)
+See the original git source: [https://github.com/jcs/lobsters](https://github.com/jcs/lobsters),
+
 And the living demo: [https://lobste.rs](https://lobste.rs). 
 
-####Initial setup
+####Installation
 
 * Install Ruby 1.9.3 or higher.
 
@@ -17,7 +18,7 @@ And the living demo: [https://lobste.rs](https://lobste.rs).
 
          lobsters-cn$ bundle
 
-* Update `file_to_copy`, and copy or overwrite to each directories:
+* Update folder `file_to_copy`, and copy or overwrite to each directories:
 
           config/database.yml
           config/application.yml
@@ -27,11 +28,8 @@ And the living demo: [https://lobste.rs](https://lobste.rs).
 
 * Load the schema into the new database:
 
-					lobsters-cn$ rake db:create
+          lobsters-cn$ rake db:create
           lobsters-cn$ rake db:schema:load
-
-* initialize data:
-
           lobsters-cn$ rake db:seed
 
 * (Optional, only needed for the search engine) Install Sphinx.  Build Sphinx
