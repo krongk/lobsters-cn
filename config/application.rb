@@ -77,6 +77,4 @@ silence_warnings do
   ActionDispatch::ParamsParser::DEFAULT_PARSERS = {}
 end
 
-Rails.application.routes.default_url_options[:host] = Rails.application.domain
-
 require "#{Rails.root}/lib/monkey"

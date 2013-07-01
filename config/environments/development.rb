@@ -51,5 +51,3 @@ Lobsters::Application.configure do
     :password => ENV["GMAIL_PASSWORD"]
   }
 end
-
-#Rails.application.routes.default_url_options[:host] = "localhost:3001"

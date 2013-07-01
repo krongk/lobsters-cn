@@ -27,11 +27,12 @@ And the living demo: [https://lobste.rs](https://lobste.rs).
 
 * Load the schema into the new database:
 
+					lobsters-cn$ rake db:create
           lobsters-cn$ rake db:schema:load
 
 * initialize data:
 
-          lobsters-cn$ rake db:seeds
+          lobsters-cn$ rake db:seed
 
 * (Optional, only needed for the search engine) Install Sphinx.  Build Sphinx
 config and start server:
