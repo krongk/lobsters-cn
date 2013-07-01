@@ -1,0 +1,1 @@
+Lobsters::Application.config.secret_token = 'your random secret here'

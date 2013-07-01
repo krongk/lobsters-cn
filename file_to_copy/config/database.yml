@@ -1,0 +1,22 @@
+base: &base
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  host: localhost
+  port: 3306
+  username: root
+  password: your password
+
+development:
+  <<: *base
+  database: lobsters_dev
+
+test:
+  <<: *base
+  database: lobsters_test
+
+production:
+  <<: *base
+  database: lobsters
+

@@ -65,17 +65,20 @@ Lobsters::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # #send mailer
-  # config.action_mailer.perform_deliveries = true
-  # config.action_controller.perform_caching = false
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   :enable_starttls_auto => true,
-  #   :address => "smtp.gmail.com",
-  #   :port => 587,
-  #   :domain => "inruby.com",
-  #   :authentication => :login,
-  #   :user_name => "kenrome",
-  #   :password => "inruby.com"
-  # }
+  #send mailer
+  #534 error: login gmail and set allow to access this ip send email.
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => "baoxian028.com",
+    :authentication => :login,
+    :user_name => ENV["GMAIL_USERNAME"],
+    :password => ENV["GMAIL_PASSWORD"]
+  }
+  
 end

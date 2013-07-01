@@ -36,37 +36,20 @@ Lobsters::Application.configure do
   config.assets.debug = true
 
   #send mailer
+  #534 error: login gmail and set allow to access this ip send email.
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
     :address => "smtp.gmail.com",
     :port => 587,
     :domain => "baoxian028.com",
     :authentication => :login,
-    :user_name => "kenrome",
-    :password => "inruby.com"
+    :user_name => ENV["GMAIL_USERNAME"],
+    :password => ENV["GMAIL_PASSWORD"]
   }
-
-  # # ActionMailer Config
-  # #config.action_mailer.default_url_options = { :host => 'www.cocacocan.com' }
-  # config.action_mailer.delivery_method = :smtp
-
-  # config.action_mailer.perform_deliveries = true
-  # config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.default :charset => "utf-8"
-
-  # config.action_mailer.smtp_settings = {
-  #   address: "smtp.gmail.com",
-  #   port: 587,
-  #   domain: "yufuwu.org",
-  #   # authentication: :login,
-  #   # enable_starttls_auto: true,
-  #   user_name: 'kenrome',
-  #   password: 'inruby.com'
-  # }
-
 end
 
-Rails.application.routes.default_url_options[:host] = "localhost:3001"
+#Rails.application.routes.default_url_options[:host] = "localhost:3001"

@@ -3,7 +3,7 @@ source "http://ruby.taobao.org"
 
 gem "rails"#, "3.2.13"
 
-gem "rake", "10.0.3"
+gem "rake"#, "10.0.3"
 
 # Bundle edge Rails instead:
 # gem "rails", :git => "git://github.com/rails/rails.git"
@@ -36,8 +36,8 @@ gem "thinking-sphinx", "2.0.12"
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
   gem "machinist"
-  gem "sqlite3"
 end
+
 #not for windows but for linux
 gem "libv8", ">= 3.11.8"
 gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require => "v8"

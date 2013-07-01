@@ -44,7 +44,7 @@ class SignupController < ApplicationController
     if @new_user.save
       @invitation.destroy
       session[:u] = @new_user.session_token
-      flash[:success] = "欢迎, #{@new_user.username}!"
+      flash[:success] = "欢迎你, #{@new_user.username}！"
 
       Countinual.count!("lobsters.users.created", "+1")
 
