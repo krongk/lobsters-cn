@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user
@@ -50,7 +51,7 @@ class ApplicationController < ActionController::Base
     if @user
       true
     else
-      render :text => "not logged in", :status => 400
+      render :text => "还没有登录", :status => 400
       return false
     end
   end

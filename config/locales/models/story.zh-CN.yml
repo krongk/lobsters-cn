@@ -1,0 +1,23 @@
+---
+zh-CN:
+  activerecord:
+    models:
+      story: 报道
+    attributes:
+      story:
+        user_id: 用户ID
+        url: 链接
+        title: 标题
+        description: 内容
+        markeddown_description: Markeddown内容
+        tags: 标签
+        short_id: 短ID
+        is_expired: 过期
+        upvotes: 顶
+        downvotes: 踩
+        is_moderated: 被修改
+        hotness: 热度
+    errors:
+      story: 
+  helpers:
+    story: 

@@ -1,23 +1,24 @@
+#encoding: utf-8
 class Vote < ActiveRecord::Base
   belongs_to :user
   belongs_to :story
 
   STORY_REASONS = {
-    "S" => "Spam",
-    "A" => "Already Posted",
-    "L" => "Poorly Titled",
-    "T" => "Poorly Tagged",
-    "O" => "Off-topic",
-    "" => "Cancel",
+    "S" => "垃圾信息",
+    "O" => "无关话题",
+    "A" => "重复发布了",
+    "L" => "与标题不符",
+    "T" => "与标签不符",
+    "" => "取消",
   }
 
   COMMENT_REASONS = {
-    "O" => "Off-topic",
-    "I" => "Incorrect",
-    "M" => "Me-too",
-    "T" => "Troll",
-    "S" => "Spam",
-    "" => "Cancel",
+    "O" => "无关话题",
+    "I" => "不正确",
+    "M" => "我也是",
+    "T" => "冗长",
+    "S" => "垃圾信息",
+    "" => "取消",
   }
 
   attr_accessible nil

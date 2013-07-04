@@ -29,7 +29,7 @@
             <a href="/u/<%= message.recipient.username %>"><%=
               message.recipient.username %></a>
           <% end %></td>
-        <td><%= raw(time_ago_in_words_label(message.created_at)) %> ago</td>
+        <td><%= raw(time_ago_in_words_label(message.created_at)) %>前</td>
         <td><a href="/messages/<%= message.short_id %>"><%= message.subject
           %></a></td>
       </tr>
@@ -51,13 +51,13 @@
     <%= error_messages_for @new_message %>
 
     <div class="boxline">
-      <%= f.label :recipient_username, "收件者:", :class => "required" %>
+      <%= f.label :recipient_username, "收件人:", :class => "required" %>
       <%= f.text_field :recipient_username, :size => 20,
         :autocomplete => "off" %>
     </div>
 
     <div class="boxline">
-      <%= f.label :subject, "主题:", :class => "required" %>
+      <%= f.label :subject, "标题:", :class => "required" %>
       <%= f.text_field :subject, :style => "width: 500px;",
         :autocomplete => "off" %>
     </div>

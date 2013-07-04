@@ -8,7 +8,7 @@ class SignupController < ApplicationController
       return redirect_to "/"
     end
 
-    @title = "Signup"
+    @title = "注册"
   end
 
   def invited

@@ -15,37 +15,36 @@
           <a href="#" id="story_guidelines_toggler">
             使用教程
           </a>
-          <div id="story_guidelines" style="<%= @user &&
-          @user.stories_submitted_count > 2 ? "display: none;" : "" %>">
-            <div style="float: right;">
-            <a href="javascript:window.location=%22<%= root_url %>stories/new?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)"
-            style="border: 1px solid #ddd; padding: 0.5em; background-color:
-            #f8f8f8; line-height: 1.5em; margin-left: 1em;">提交到雨服务</a>
+          <div id="story_guidelines" style="<%= @user && @user.stories_submitted_count > 2 ? "display: none;" : "" %>">
+            
+            <div id="step">
+              <p><span class="message" style="color: red;">&nbsp;</span></p>
+              <div id="arrow"></div>
             </div>
-            <ul>
 
+            <ul>
             <li>
+              <div style="float: right;">
+              <a id="quoteredlet" href="javascript:window.location=%22<%= root_url %>stories/new?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)" onclick="alert('把该按钮拖放到书签栏.'); return false">+雨服务+</a>
+              </div>
             <p>
-              为了方便提交报道，你可将右边的按钮拖当浏览器的书签栏。 
-              (Chrome浏览器，快捷键Ctrl+Shift+B将显示标签；IE浏览器通过快捷键Ctrl+Shift+I打开书签栏)；在要报道的页面，点击书签“提交的雨服务”，将直接打开雨服务提交页面，且已经自动获取到了地址和标题。
+              为了方便提交报道，你可将<b>右边的按钮"+雨服务"</b>拖放到浏览器的书签栏。 当要分享文章的时候，点击该书签即可将文章提交到本网站。
+              <br>
+              <i>*提示：Chrome浏览器按快捷键【Ctrl+Shift+B】显示书签；IE浏览器按快捷键【Ctrl+Shift+I】打开书签栏；Firefox按快捷键【Ctrl+B】</i>
             </p>
 
             <li><p>
-              两种情况：<br>
-              一种是在雨服务分享文章，这需要提供原文章的链接(URL)和标题，内容部分可选填。<br>
-              一种是在雨服务发表文章，这种情况下，不需要提交链接(URL), 只需要提交标题和内容。
+              使用本网站的两种情况：<br>
+              一种是在雨服务<b>分享文章</b>，这需要提供原文章的链接(URL)和标题，内容部分可选填。<br>
+              一种是在雨服务<b>发表文章</b>，这种情况下，不需要提交链接(URL), 只需要提交标题和内容。
               </p></li>
 
             <li><p>
-              标题是内容的概括，切题的标题能吸引真正感兴趣的用户，影响到报道的评分效果.
-              </p></li>
+              <b>标签</b>是必选项；如果没有合适的标签来标记你报道的文章，说明此文章不适合在这里发表，为了保证阅读的质量，最好不要滥竽充数.
+            </p></li>
 
             <li><p>
-              标签是不选项；如果没有合适的标签来标记你报道的文章，说明此文章不适合在这里发表，为了保证阅读的质量，最好不要滥竽充数.
-              </p></li>
-
-            <li><p>
-              如果报道的内容是很久的内容(一年多前的，或更久)， 最好在标题前用括号加一个年份.
+              如果报道的内容是很久的内容(一年多前的，或更久)， 最好在标题前用括号加一个年份. 以方便读者阅读。
               </p></li>
 
             <li><p>
@@ -65,7 +64,7 @@
             Markdown 语法介绍
           </div>
 
-          <%= submit_tag "提交" %>
+          <%= submit_tag " 提交报道 " %>
 
           &nbsp;
           <button type="button" class="story-preview">预览</button>
@@ -123,5 +122,40 @@
       $("#story_guidelines").toggle();
       return false;
     });
+
+    //quoterlet
+    drag_quoterlet();
   });
+
+  //private function
+  function update_status(e) {
+    $("#step .message").html(e), $("#quoteredlet_message").html("&larr; " + e)
+  }
+
+  function drag_quoterlet() {
+    var dragging_quoteredlet = !1,
+    installed_quoteredlet = !1,
+    arrow = $("#arrow") 
+    y = 0,
+    DURATION = 200;
+
+    $("#quoteredlet").mouseenter(function () {
+        arrow.fadeIn(), update_status("鼠标点击按钮不放，把按钮拖到浏览器上面的书签栏去!")
+    }),
+
+    $("#quoteredlet").mouseleave(function () {
+        dragging_quoteredlet || arrow.fadeOut(), update_status("将此按钮拖放到上面的书签栏.")
+    }), 
+    
+    $("#quoteredlet").mousedown(function () {
+        update_status("嗯，往上拖动!"), dragging_quoteredlet = !0
+    }), 
+
+    $(document).on("dragend", function (e) {
+        dragging_quoteredlet && (arrow.fadeOut(), y > 50 ? update_status("你好像没有完成，再试一次吧！") : (installed_quoteredlet = !0, update_status("将此按钮拖放到上面的书签栏."))), dragging_quoteredlet = !1
+    }), 
+    $(document).on("dragover", function (e) {
+        dragging_quoteredlet && (y = e.originalEvent.clientY, y > 200 ? update_status("继续向上!") : y > 100 ? update_status("恩，快到了，继续向上!") : y > 2 ? update_status("继续向上!") : update_status("好，松手!"))
+    })
+  };
 </script>

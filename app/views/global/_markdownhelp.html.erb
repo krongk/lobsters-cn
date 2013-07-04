@@ -1,7 +1,7 @@
 <div class="markdown_help" style="display: none; padding-top: 0.5em;">
-  <table>
+  <table border="0">
   <tr>
-    <td width="125"><em>文字强调</em></td>
+    <td width="125" height="30"><em>文字强调</em></td>
     <td>在文字两边添加 <tt>*星号*</tt></td>
   </tr>
   <tr>
@@ -13,23 +13,23 @@
     <td>在文字两边添加 <tt>~~两个波浪线~~</tt></td>
   </tr>
   <tr>
-    <td><a href="#"
+    <td height="60"><a href="#"
       style="color: inherit;">添加链接</a></td>
-    <td><tt>[链接说明](链接路径)</tt> 或者直接粘贴链接路径，如果不需要链接说明</td>
+    <td><tt>[链接说明](链接路径)</tt> 或者直接粘贴链接路径。如:<br>[谷歌](http://www.google.com)</td>
   </tr>
   <tr>
-    <td><blockquote>文本块</blockquote></td>
+    <td height="30"><blockquote>文本块</blockquote></td>
     <td>在段落前添加： <tt>&gt;</tt></td>
   </tr>
   <tr>
     <td><pre style="margin: 0px;">预处理文本</pre></td>
-    <td>在段落前添加至少<tt>&nbsp;&nbsp;&nbsp;3 个空格</tt></td>
+    <td>在段落前添加至少<tt>3个空格</tt></td>
   </tr>
 
   <% if defined?(allow_images) && allow_images %>
     <tr>
-      <td>添加图片</td>
-      <td><tt>![图片说明](图片路径如：http://example.com/image.jpg)</tt> </td>
+      <td height="60">添加图片</td>
+      <td><tt>![图片说明](图片路径). 如：<br>![谷歌logo](https://www.google.com/images/srpr/logo4w.png)</tt> </td>
     </tr>
   <% end %>
 

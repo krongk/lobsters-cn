@@ -148,8 +148,8 @@ class Story < ActiveRecord::Base
     elsif all_changes["is_expired"] && !self.is_expired?
       m.action = "undeleted story"
     else
-      m.action = all_changes.map{|k,v| "changed #{k} from #{v[0].inspect} " <<
-        "to #{v[1].inspect}" }.join(", ")
+      m.action = all_changes.map{|k,v| "[#{I18n.t('activerecord.attributes.story.' + k)}]从 #{v[0].inspect} " <<
+        "修改为 #{v[1].inspect}" }.join(", ")
     end
 
     m.reason = self.moderation_reason

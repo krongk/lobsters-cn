@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
   end
 
   def undeleted_received_messages
-    received_messages.where(:deleted_by_recipient => false)
+    received_messages.where(:deleted_by_recipient => false).order("created_at DESC")
   end
 
   def undeleted_sent_messages

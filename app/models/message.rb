@@ -46,11 +46,11 @@ class Message < ActiveRecord::Base
       self.recipient.pushover_user_key.present?
         Pushover.push(self.recipient.pushover_user_key,
           self.recipient.pushover_device, {
-          :title => "Lobsters message from #{self.author.username}: " <<
+          :title => "来自#{self.author.username}的消息: " <<
             "#{self.subject}",
           :message => self.plaintext_body,
           :url => self.url,
-          :url_title => "Reply to #{self.author.username}",
+          :url_title => "来自#{self.author.username}的回复",
         })
       end
     rescue
@@ -64,7 +64,7 @@ class Message < ActiveRecord::Base
       self.recipient_user_id = u.id
       @recipient_username = username
     else
-      errors.add(:recipient_username, "is not a valid user")
+      errors.add(:recipient_username, "这是一个无效的用户")
     end
   end
 

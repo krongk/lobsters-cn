@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Moderation < ActiveRecord::Base
   belongs_to :moderator,
     :class_name => "User",
@@ -19,31 +20,31 @@ class Moderation < ActiveRecord::Base
 
     if self.story
       m.recipient_user_id = self.story.user_id
-      m.subject = "Your story has been edited by a moderator"
-      m.body = "Your story [#{self.story.title}](" <<
-        "#{self.story.comments_url}) has been edited by a moderator with " <<
-        "the following changes:\n" <<
+      m.subject = "你提交的报道被会长编辑过了"
+      m.body = "你提交的报道[#{self.story.title}](" <<
+        "#{self.story.comments_url}) 被会长编辑过，" <<
+        "修改日志:\n" <<
         "\n" <<
         "> *#{self.action}*\n"
 
       if self.reason.present?
         m.body << "\n" <<
-          "The reason given:\n" <<
+          "修改的原因:\n" <<
           "\n" <<
           "> *#{self.reason}*"
       end
 
     elsif self.comment
       m.recipient_user_id = self.comment.user_id
-      m.subject = "Your comment has been moderated"
-      m.body = "Your comment on [#{self.comment.story.title}](" <<
-        "#{self.comment.story.comments_url}) has been moderated:\n" <<
+      m.subject = "你提交的评论被会长编辑过了"
+      m.body = "你提交的评论 [#{self.comment.story.title}](" <<
+        "#{self.comment.story.comments_url}) 被修改如下:\n" <<
         "\n" <<
         "> *#{self.comment.comment}*"
 
       if self.reason.present?
         m.body << "\n" <<
-          "The reason given:\n" <<
+          "修改原因:\n" <<
           "\n" <<
           "> *#{self.reason}*"
       end

@@ -193,7 +193,7 @@ var _Lobsters = Class.extend({
 
     var old_value = button.val();
     button.prop("disabled", true);
-    button.val("Fetching...");
+    button.val("正在加载...");
 
     $.post("/stories/fetch_url_title", {
       fetch_url: url_field.val(),
@@ -255,7 +255,7 @@ $(document).ready(function() {
     box.html($("#comment_form").clone());
     box.find("ol").remove();
 
-    box.find("button.comment-preview").after("&nbsp;\n&nbsp;<button class=\"comment-cancel\" name=\"button\" type=\"button\">Cancel</button>");
+    box.find("button.comment-preview").after("&nbsp;\n&nbsp;<button class=\"comment-cancel\" name=\"button\" type=\"button\">取消</button>");
 
     box.find("textarea").focus();
 
@@ -279,7 +279,7 @@ $(document).ready(function() {
   });
 
   $("a.comment_deletor").live("click", function() {
-    if (confirm("Are you sure you want to delete this comment?")) {
+    if (confirm("确定要删除该评论么?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/delete",
       function(d) {
@@ -289,7 +289,7 @@ $(document).ready(function() {
   });
 
   $("a.comment_undeletor").live("click", function() {
-    if (confirm("Are you sure you want to undelete this comment?")) {
+    if (confirm("确定要恢复该评论么?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/undelete",
       function(d) {

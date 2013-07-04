@@ -21,22 +21,22 @@
   </div>
 
   <div class="boxline" style="margin-bottom: 2px;">
-  <%= f.label :tags_a, "标签:", :class => "required",
+  <%= f.label :tags_a, "标签(必选):", :class => "required",
     :style => "line-height: 2.3em;" %>
   <%= f.select "tags_a", options_for_select(
     Tag.all_with_filtered_counts_for(@user).map{|t|
     [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw("<strong>") +
       t.tag + raw("</strong> - ") + t.description.to_s +
       (t.filtered_count == 0 ? "" :
-      raw(" <em>") + "#{t.filtered_count} user" +
-      (t.filtered_count == 1 ? "" : "s") + " filtering" +
+      raw(" <em>") + "#{t.filtered_count}个" +
+       "过滤" +
       raw("</em>")) } ]}, f.object.tags_a), {}, { :multiple => true } %>
   </div>
 
   <div class="boxline">
     <%= f.label :description, "内容:", :class => "required" %>
     <%= f.text_area :description, :rows => 15,
-      :placeholder => "如果分享链接(URL),则可选填; 请参考下面的使用教程",
+      :placeholder => "如果是分享文章,则此处可选填; 请参考下面的使用教程",
       :autocomplete => "off" %>
   </div>
 </div>
