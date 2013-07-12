@@ -1,9 +1,6 @@
 <%= @invitation.email %>：
 
-	您好，“<%= @invitation.user.username %>”邀请你成为雨服务（www.yufuwu.org）网站的会员。
+	您好，“<%= @invitation.user.username %>”邀请你成为网站的会员。
 	<%= @invitation.memo.present? ? raw("#{@invitation.user.username}说: #{@invitation.memo}") : "" %>
-
-	雨服务是一个通过邀请机制注册的网站，没有邀请是注册不了的，请珍惜这次邀请机会哟，
-	要注册请复制以下链接到浏览器打开:
 
 	<%= root_url %>invitations/<%= @invitation.code %>

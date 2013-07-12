@@ -1,0 +1,65 @@
+<h1>批量邀请</h1>
+
+<div id="scope">
+	<a href="/admin/biz_email">全部</a>&nbsp;&nbsp;
+	<a href="/admin/biz_email?scope=not_mailed">未发送</a>&nbsp;&nbsp;
+	<a href="/admin/biz_email?scope=successed">成功发送</a>&nbsp;&nbsp;
+	<a href="/admin/biz_email?scope=failed">发送失败</a>&nbsp;&nbsp;
+	<a href="/admin/biz_email?scope=skipped">跳过</a>
+</div>
+
+<%= form_tag "/sent_biz_email", :method => :post do |f| %>
+	<table>
+		<tr>
+			<th width="40" align="left"><a onClick="javascript: ToggleCheck();" href="#">选择</a></th>
+			<th width="40" align="left">编号</th>
+			<th width="200" align="left">分类</th>
+			<th align="left">名称</th>
+			<th width="180" align="left">Email</th>
+			<th width="40" align="right">状态</th>
+		</tr>
+	<% @biz_emails.each do |item| %>
+	  <tr>
+	  	<td height="20"><%= check_box_tag 'biz_email_ids[]', item.id %></td>
+	  	<td><%= item.id %></td>
+	  	<td><%= item.cate %></td>
+	  	<td><%= item.name %></td>
+	  	<td><%= item.email %></td>
+	  	<td align="right"><%= item.is_processed %></td>
+	  </tr>
+	<% end %>
+	</table>
+
+	<div class="boxline">
+    <%= label_tag :memo, "邀请词:", :class => "required" %>
+    <%= text_field_tag :memo, "", :size => 80 %>
+  </div>
+
+  <div class="boxline">
+    <p></p>
+    <%= submit_tag "发送邀请" %>
+  </div>
+<% end %>
+
+<br>
+<%= will_paginate @biz_emails %>
+
+<script type="text/javascript">
+	function ToggleCheck()
+	{
+	  var names=document.getElementsByName("biz_email_ids[]");
+	  var len=names.length;
+	  if(len>0)
+	  {
+	   var i=0;
+	   for(i=0;i<len;i++){
+	   	 if(names[i].checked == true){
+	   	 		names[i].checked=false;
+	   	 }else{
+	   	 		names[i].checked=true;
+	   	 }
+	   }
+	   
+	  }
+	}
+</script>

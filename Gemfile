@@ -42,3 +42,5 @@ end
 gem "libv8", ">= 3.11.8"
 gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require => "v8"
 
+#pagination for admin
+gem 'will_paginate'#, :git => 'git://github.com/mislav/will_paginate.git', :branch => 'rails3'

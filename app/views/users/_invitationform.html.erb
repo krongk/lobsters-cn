@@ -21,7 +21,8 @@
 
   <div class="boxline">
     <p></p>
-    <%= submit_tag "发送邀请" %>
+    <%= submit_tag "发送邀请" %> <br><br>->>  
+    <%= link_to_if @user.try(:is_admin?), "批量邀请", "/admin/biz_email" %>
   </div>
 <% end %>
 
