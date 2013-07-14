@@ -4,7 +4,7 @@
   </div>
 
   <div id="story_holder">
-    <%= form_for @story do |f| %>
+    <%= form_for @story, :html =>{:multipart => true} do |f| %>
       <%= render :partial => "stories/form", :locals => { :story => @story,
         :f => f } %>
 

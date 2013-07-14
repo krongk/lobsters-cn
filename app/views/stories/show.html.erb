@@ -4,11 +4,14 @@
 </ol>
 
 <div class="story_content">
-	<% if @story.markeddown_description.present? %>
-		<div class="story_text">
-			<%= raw @story.markeddown_description %>
-		</div>
-	<% end %>
+  <% if @story.markeddown_description.present? %>
+    <div class="story_text">
+      <%= raw @story.markeddown_description %>
+    </div>
+  <% end %>
+  <% @story.assets.each do |asset| %>
+    <%= image_tag asset.asset.url(:large) %>
+  <% end %>
 
   <p></p>
   <% if @user && !@story.is_gone? && !@story.previewing %>

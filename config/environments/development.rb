@@ -51,3 +51,6 @@ Lobsters::Application.configure do
     :password => ENV["GMAIL_PASSWORD"]
   }
 end
+
+Paperclip.options[:command_path] = "/usr/bin/convert"
+

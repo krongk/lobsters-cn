@@ -39,6 +39,19 @@
       :placeholder => "如果是分享文章,则此处可选填; 请参考下面的使用教程",
       :autocomplete => "off" %>
   </div>
+
+<!--   <%= f.fields_for :assets do |asset_form| %>
+    <div class="boxline">
+      <%= f.label :asset, "添加图片:" %>
+      <%= asset_form.file_field :asset %>
+    </div>
+  <% end %> -->
+  <div id="image_holder_0"></div>
+  <div class="boxline">
+    <label for="story_assets">&nbsp;</label>
+    <%= button_tag "添加图片", :id => "add_image", :value => 0, :type => "button" %>
+  </div>
+
 </div>
 
 <script>
@@ -46,6 +59,13 @@
     $("#story_fetch_title").click(function() {
       Lobsters.fetchURLTitle($(this), $("#story_url"), $("#story_title"));
       return false;
+    });
+
+    //add image
+    $("#add_image").click(function(){
+      var i = parseInt($(this).val());
+      $("#image_holder_"+ i).html('<div class="boxline"><label for="story_asset">&nbsp;</label><input id="story_assets_attributes_'+i+'_asset" name="story[assets_attributes]['+i+'][asset]" type="file" /></div><div id="image_holder_'+(i+1)+'"></div>');
+      $(this).val(i + 1);
     });
   });
 </script>

@@ -83,6 +83,7 @@ class StoriesController < ApplicationController
     @cur_url = "/stories/new"
 
     @story = Story.new
+    5.times{ @story.assets.build }
 
     if params[:url].present?
       @story.url = params[:url]

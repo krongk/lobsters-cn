@@ -11,7 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622021035) do
+ActiveRecord::Schema.define(:version => 20130714064828) do
+
+  create_table "assets", :force => true do |t|
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+    t.integer  "story_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "assets", ["story_id"], :name => "index_assets_on_story_id"
+
+  create_table "biz_emails", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "is_processed", :limit => 50,  :default => "n", :null => false
+    t.string   "cate",         :limit => 64
+    t.string   "name",         :limit => 128
+    t.string   "email",        :limit => 128
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "biz_emails", ["email"], :name => "unq__email", :unique => true
+  add_index "biz_emails", ["is_processed"], :name => "idx__processed"
+  add_index "biz_emails", ["user_id", "is_processed"], :name => "idx__user_processed"
 
   create_table "comments", :force => true do |t|
     t.datetime "created_at",                                                                                :null => false
@@ -121,6 +147,21 @@ ActiveRecord::Schema.define(:version => 20130622021035) do
   end
 
   add_index "tags", ["tag"], :name => "tag", :unique => true
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "story_id"
+    t.string   "upload_file_name"
+    t.string   "upload_content_type"
+    t.integer  "upload_file_size"
+    t.datetime "upload_updated_at"
+    t.boolean  "is_deleted",          :default => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "uploads", ["story_id"], :name => "index_uploads_on_story_id"
+  add_index "uploads", ["user_id"], :name => "index_uploads_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",             :limit => 50

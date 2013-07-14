@@ -44,3 +44,6 @@ gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require
 
 #pagination for admin
 gem 'will_paginate'#, :git => 'git://github.com/mislav/will_paginate.git', :branch => 'rails3'
+
+gem "paperclip-dropbox", ">= 1"
+

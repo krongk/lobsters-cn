@@ -6,7 +6,8 @@ class Story < ActiveRecord::Base
     :autosave => true
   has_many :comments
   has_many :tags, :through => :taggings
-
+  has_many :assets
+  accepts_nested_attributes_for :assets, :allow_destroy => true
   validates_length_of :title, :in => 3..150
   validates_length_of :description, :maximum => (64 * 1024)
   validates_presence_of :user_id
@@ -18,7 +19,7 @@ class Story < ActiveRecord::Base
   attr_accessor :vote, :already_posted_story, :fetched_content, :previewing
   attr_accessor :editor_user_id, :moderation_reason
 
-  attr_accessible :title, :description, :tags_a, :moderation_reason
+  attr_accessible :title, :description, :tags_a, :moderation_reason, :assets_attributes
 
   before_create :assign_short_id
   before_save :log_moderation
