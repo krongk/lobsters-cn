@@ -30,4 +30,4 @@ config/initializers/secret_token.rb
 config/*.sphinx.conf
 config/unicorn.conf.rb
 config/application.yml
-
+config/dropbox.yml
