@@ -31,3 +31,8 @@ config/*.sphinx.conf
 config/unicorn.conf.rb
 config/application.yml
 
+#dropbox account
+config/dropbox.yml
+#upyun account
+config/initializers/paperclip.rb
+

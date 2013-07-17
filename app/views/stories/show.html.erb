@@ -10,7 +10,9 @@
     </div>
   <% end %>
   <% @story.assets.each do |asset| %>
-   <div class="assets_show"> <%= image_tag asset.asset.url, :alt => @story.url, :title => @story.title %></div>
+   <div class="assets_show">
+   <img src="http://<%= asset.asset.url%>" alt="<%=@story.url%>" title="<%= @story.title%>" />
+   <%#= image_tag asset.asset.url, :alt => @story.url, :title => @story.title %></div>
   <% end %>
 
 
