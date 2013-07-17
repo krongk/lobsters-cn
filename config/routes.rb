@@ -25,14 +25,14 @@ Lobsters::Application.routes.draw do
   get "/signup/invite" => "signup#invite"
 
   match "/login/forgot_password" => "login#forgot_password",
-    :as => "forgot_password"
+    :as => "forgot_password", via: :all
   post "/login/reset_password" => "login#reset_password",
     :as => "reset_password"
   match "/login/set_new_password" => "login#set_new_password",
-    :as => "set_new_password"
+    :as => "set_new_password", via: :all
 
-  match "/t/:tag" => "home#tagged", :as => "tag"
-  match "/t/:tag/page/:page" => "home#tagged"
+  match "/t/:tag" => "home#tagged", :as => "tag", via: :all
+  match "/t/:tag/page/:page" => "home#tagged", via: :all
 
   get "/search" => "search#index"
 

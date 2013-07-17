@@ -243,7 +243,7 @@ $(document).ready(function() {
     return Lobsters.moderateStory(this);
   }),
 
-  $("a.comment_replier").live("click", function() {
+  $("a.comment_replier").on("click", function() {
     if (!Lobsters.curUser) {
       Lobsters.bounceToLogin();
       return false;
@@ -268,17 +268,17 @@ $(document).ready(function() {
     return false;
   });
 
-  $("button.comment-cancel").live("click", function() {
+  $("button.comment-cancel").on("click", function() {
     $(this).parents("div.comment_reply form").remove();
   });
 
-  $("a.comment_editor").live("click", function() {
+  $("a.comment_editor").on("click", function() {
     var li = $(this).parents("li.comment").first();
     li.load("/comments/" + $(li).attr("data-shortid") + "/edit",
       { "edit": 1 });
   });
 
-  $("a.comment_deletor").live("click", function() {
+  $("a.comment_deletor").on("click", function() {
     if (confirm("确定要删除该评论么?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/delete",
@@ -288,7 +288,7 @@ $(document).ready(function() {
     }
   });
 
-  $("a.comment_undeletor").live("click", function() {
+  $("a.comment_undeletor").on("click", function() {
     if (confirm("确定要恢复该评论么?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/undelete",
@@ -308,17 +308,18 @@ $(document).ready(function() {
   });
 
   /* TODO: jquery says live() is slow and bad, what is supposed to be used? */
-  $("div.markdown_help_toggler .markdown_help_label").live("click",
+  $("div.markdown_help_toggler .markdown_help_label").on("click",
   function() {
     $(this).parents("div.markdown_help_toggler").first().
       children(".markdown_help").toggle();
   });
 
-  $("button.comment-post").live("click", function() {
+  $("button.comment-post").on("click", function() {
     Lobsters.postComment($(this).parents("form").first());
   });
-
-  $("button.comment-preview").live("click", function() {
+  //To exactly match $("a.foo").on("click", fn), 
+  //for example, you can write $(document).on("click", "a.foo", fn)
+  $("button.comment-preview").on("click", function() {
     Lobsters.previewComment($(this).parents("form").first());
   });
 });

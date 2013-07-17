@@ -3,10 +3,16 @@ source "http://ruby.taobao.org"
 
 gem "rails"#, "3.2.13"
 
-gem "rake"#, "10.0.3"
+gem "rake"#, "10.1.0"
 
 # Bundle edge Rails instead:
 # gem "rails", :git => "git://github.com/rails/rails.git"
+
+# add these gems to help with the transition:
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
 
 gem "mysql2"#, :git => "git://github.com/brianmario/mysql2.git"
 
