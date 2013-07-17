@@ -10,8 +10,9 @@
     </div>
   <% end %>
   <% @story.assets.each do |asset| %>
-    <%= image_tag asset.asset.url(:large) %>
+   <div class="assets_show"> <%= image_tag asset.asset.url, :alt => @story.url, :title => @story.title %></div>
   <% end %>
+
 
   <p></p>
   <% if @user && !@story.is_gone? && !@story.previewing %>

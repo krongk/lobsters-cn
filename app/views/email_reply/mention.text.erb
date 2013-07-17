@@ -1,5 +1,5 @@
-<%= @comment.user.username %> has mention you in a comment:
+<%= @comment.user.username %>在评论中提到你:
 
   <%= word_wrap(@comment.plaintext_comment, :line_width => 72).gsub(/\n/, "\n  ") %>
 
-Continue this discussion at <%= @comment.url %>
+继续评论信息请打开：<%= @comment.url %>

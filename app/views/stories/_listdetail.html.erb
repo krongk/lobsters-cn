@@ -14,10 +14,23 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
       <%= link_to "", login_url, :class => "downvoter" %>
     <% end %>
   </div>
-  <div class="details">
+  <% if story.assets.any? %>
+    <% @img_url = begin
+      story.assets[-1].asset.url(:small)
+    rescue Exception => e
+      nil
+    end%>
+    <% unless @img_url.nil? %>
+      <div class="voters">
+        <span class="img"><%= image_tag @img_url, :style => "width:auto; height:auto; vertical-align:middle;" %></span>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="<% unless @img_url.nil? %>img_details<% end %> details">
     <span class="link">
       <% if story.can_be_seen_by_user?(@user) %>
-        <a href="<%= story.url_or_comments_url %>"><%= story.title %></a>
+        <a href="<%= story.url_or_comments_url %>" target="_blank"><%= story.title %></a>
       <% end %>
       <% if story.is_gone? %>
         [此报道已被 <%= story.is_moderated? ? "会长" :
