@@ -23,8 +23,7 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
     <% unless @img_url.nil? %>
       <div class="voters">
         <span class="img">
-          <img src="http://<%= @img_url%>" alt="<%=story.url%>" title="<%= story.title%>" />
-          <%#= image_tag @img_url, :style => "width:auto; height:auto; vertical-align:middle;" %>
+          <%= image_tag @img_url, :style => "width:auto; height:auto; vertical-align:middle;" %>
         </span>
       </div>
     <% end %>
