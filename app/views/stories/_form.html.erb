@@ -36,7 +36,9 @@
   <div class="boxline">
     <%= f.label :description, "内容:", :class => "required" %>
     <%= f.text_area :description, :rows => 15,
-      :placeholder => "如果是分享文章,则此处可选填; 请参考下面的使用教程",
+      :placeholder => %{如果是转载链接,则内容可选填;
+        如何发布文章请参考下面的【使用教程】；\n
+        内容排版请参考下面的【Markdown语法介绍】},
       :autocomplete => "off" %>
   </div>
 
