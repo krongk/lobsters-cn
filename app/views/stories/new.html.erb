@@ -1,6 +1,6 @@
 <div class="box" id="story_box">
   <div class="legend">
-    提交一个报道
+    提交报道(原创/引用)
   </div>
 
   <div id="story_holder">
@@ -28,7 +28,7 @@
               <a id="quoteredlet" href="javascript:window.location=%22<%= root_url %>stories/new?url=%22+encodeURIComponent(document.location)+%22&title=%22+encodeURIComponent(document.title)" onclick="alert('把该按钮拖放到书签栏.'); return false">+雨服务+</a>
               </div>
             <p>
-              为了方便提交报道，你可将<b>右边的按钮"+雨服务"</b>拖放到浏览器的书签栏。 当要分享文章的时候，点击该书签即可将文章提交到本网站。
+              为了方便提交报道，你可将<b>右边的按钮"+<%= Rails.application.name %>"</b>拖放到浏览器的书签栏。 当要分享文章的时候，点击该书签即可将文章提交到本网站。
               <br>
               <i>*提示：Chrome浏览器按快捷键【Ctrl+Shift+B】显示书签；IE浏览器按快捷键【Ctrl+Shift+I】打开书签栏；Firefox按快捷键【Ctrl+B】</i>
             </p>

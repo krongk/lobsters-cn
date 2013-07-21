@@ -1,6 +1,6 @@
 <div class="box wide">
   <div class="legend right">
-		<a href="/u/<%= @user.username %>">个人资料</a>
+		<a href="/u/<%= @user.username %>">公开信息</a>
   </div>
 	<div class="legend">
 		账户设置
@@ -35,15 +35,15 @@
 
     <div class="boxline">
       <%= f.label :pushover_user_key,
-        raw("<a href=\"https://pushover.net/\">Pushover</a> User Key（若有则填）:"),
+        raw("<a href=\"https://pushover.net/\" target = \"_blank\">Pushover</a>User Key:"),
         :class => "required" %>
-      <%= f.text_field :pushover_user_key, :size => 40 %>
+      <%= f.text_field :pushover_user_key, :size => 40, :placeholder => "设置Pushover可以让你的手机收到提醒" %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_device, "Pushover Device（若有则填）:",
+      <%= f.label :pushover_device, "Pushover设备:",
         :class => "required" %>
-      <%= f.text_field :pushover_device, :placeholder => "optional",
+      <%= f.text_field :pushover_device, :placeholder => "可选填",
         :size => 15 %>
     </div>
 
@@ -75,11 +75,11 @@
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_replies, "接收 Pushover 提示:",
+      <%= f.label :pushover_replies, "接收Pushover提醒:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">
-        需要 Pushover user key
+        需要Pushover user key
       </span>
     </div>
 
@@ -90,12 +90,12 @@
     </div>
 
     <div class="boxline">
-      <%= f.label :email_mentions, "接收 E-mail:", :class => "required" %>
+      <%= f.label :email_mentions, "接收E-mail提醒:", :class => "required" %>
       <%= f.check_box :email_mentions %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_mentions, "接收 Pushover 提示:",
+      <%= f.label :pushover_mentions, "接收Pushover提醒:",
         :class => "required" %>
       <%= f.check_box :pushover_mentions %>
       <span class="hint">
@@ -110,12 +110,12 @@
     </div>
 
     <div class="boxline">
-      <%= f.label :email_messages, "接收 E-mail:", :class => "required" %>
+      <%= f.label :email_messages, "接收E-mail提醒:", :class => "required" %>
       <%= f.check_box :email_messages %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_messages, "接收 Pushover 提示:",
+      <%= f.label :pushover_messages, "接收Pushover提醒:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">

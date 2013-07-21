@@ -290,7 +290,10 @@ class Story < ActiveRecord::Base
     end
 
     new_tag_names_a.each do |tag_name|
-      if tag_name.to_s != "" && !self.tags.map{|t| t.tag }.include?(tag_name)
+      puts '----------------------'
+
+      puts self.tags
+      if tag_name.to_s != "" && !self.tags.map(&:tag).include?(tag_name)
         if t = Tag.find_by_tag(tag_name)
           # we can't lookup whether the user is allowed to use this tag yet
           # because we aren't assured to have a user_id by now; we'll do it in

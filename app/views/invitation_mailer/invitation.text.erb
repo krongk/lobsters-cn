@@ -1,6 +1,7 @@
 <%= @invitation.email %>：
 
-	您好，“<%= @invitation.user.username %>”邀请你成为网站的会员。
+	您好，“<%= @invitation.user.username %>”邀请你成为<%= Rails.application.name %>网站的会员。
 	<%= @invitation.memo.present? ? raw("#{@invitation.user.username}说: #{@invitation.memo}") : "" %>
 
+	请复制一下链接到浏览器打开注册：
 	<%= root_url %>invitations/<%= @invitation.code %>

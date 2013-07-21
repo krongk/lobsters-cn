@@ -8,16 +8,24 @@
   <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
   <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noarchive,noodp,noydir" />
   <meta name="referrer" content="always" />
   <% if @short_url %>
     <link rev="canonical" rel="self alternate shorter shorturl shortlink"
       href="<%= @short_url %>" />
   <% end %>
-  <title><%= @title.present? ? "#{@title} | 雨服务" : "雨服务" %></title>
+  <title><%= @title.present? ? "#{@title} | #{Rails.application.name}" : Rails.application.name %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <% if request.user_agent =~ /Mobile|webOS/ && (7..19).include?(Time.now.hour)%>
+    <style type="text/css">
+      <!--
+      li.story {
+        background-color: rgba(224,224,224,0.8);  
+      }
+      -->
+    </style>
+  <% end %>
   <% if @rss_link %>
     <%= raw(@rss_link) %>
   <% end %>
@@ -33,7 +41,7 @@
       <div id="headerleft">
         <a id="l_holder" style="background-color: #<%= sprintf("%02x%02x%02x",
         [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) %>;" href="/"
-        title="雨服务 (<%= @traffic.to_i %>)"></a>
+        title="<%= Rails.application.name %> (<%= @traffic.to_i %>)"></a>
 
         <% links = {
           "/" => "首页",
@@ -43,7 +51,7 @@
 
         <% if @user %>
           <% links.merge!({ "/threads" => "线索",
-            "/stories/new" => "提交报道" }) %>
+            "/stories/new" => "随义分享" }) %>
         <% end %>
 
         <% links.merge!({ "/search" => "搜索" }) %>
@@ -92,7 +100,7 @@
 
       <div class="clear"></div>
     </div>
-
+    <hr>
     <div id="inside">
       <% if flash[:error] %>
         <div class="flash-error"><%= flash[:error] %></div>

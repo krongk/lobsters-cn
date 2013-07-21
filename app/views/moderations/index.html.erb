@@ -16,10 +16,10 @@
       <td><a href="/messages?to=<%= mod.moderator.try(:username) %>"><%=
         mod.moderator.try(:username) %></a></td>
       <td><% if mod.story %>
-          <a href="<%= mod.story.comments_url %>">Story: <%= mod.story.title
+          报道: <a href="<%= mod.story.comments_url %>"><%= mod.story.title
             %></a>
         <% elsif mod.comment %>
-          <a href="<%= mod.comment.url %>">Comment on <%=
+          <a href="<%= mod.comment.url %>"><%=
             mod.comment.story.title %></a>
         <% elsif mod.user %>
           User <%= mod.user.try(:username) %>
@@ -27,12 +27,12 @@
     </tr>
     <tr class="row<%= bit %> <%= mod.reason.present?? "nobottom" : "" %>">
       <td colspan=2></td>
-      <td>Action: <em><%= mod.action %></em></td>
+      <td>操作: <em><%= mod.action %></em></td>
     </tr>
     <% if mod.reason.present? %>
       <tr class="row<%= bit %>">
         <td colspan=2></td>
-        <td>Reason: <em><%= mod.reason %></em></td>
+        <td>原因: <em><%= mod.reason %></em></td>
       </tr>
     <% end %>
     <% bit = (bit == 1 ? 0 : 1) %>

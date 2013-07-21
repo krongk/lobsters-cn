@@ -75,7 +75,7 @@ class HomeController < ApplicationController
     @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
       @tag, false, nil)
 
-    @heading = @title = @tag.description.blank?? @tag.tag : @tag.description
+    @heading = @title = @tag.tag
     @cur_url = tag_url(@tag.tag)
 
     @rss_link = "<link rel=\"alternate\" type=\"application/rss+xml\" " <<
