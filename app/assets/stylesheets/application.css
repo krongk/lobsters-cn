@@ -238,8 +238,8 @@ div#inside {
 	background-position: center;
 	float: left;
 	display: block;
-	width: 16px;
-	height: 16px;
+	width: 26px;
+	height: 26px;
 	padding: 1px;
 	margin-left: 4px;
 	margin-right: 11px;
@@ -271,6 +271,18 @@ div#inside {
 	text-decoration: none;
 	padding-right: 0.75em;
 }
+
+.headerlinks-left a {
+	color: #777;
+	text-decoration: none;
+	padding: 0.5em;
+	font-size: 1.2em;
+}
+.headerlinks-left a:hover {
+	color: #fff;
+	background-color: #990000;
+}
+
 
 #headerright {
 	float: right;

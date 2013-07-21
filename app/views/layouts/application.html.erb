@@ -63,7 +63,7 @@
           </span>
         <% end %>
 
-        <span class="headerlinks">
+        <span class="headerlinks headerlinks-left">
           <% links.each do |u,v| %>
             <a href="<%= u %>" <%= u == @cur_url ? raw("class=\"cur_url\"") :
               "" %>><%= v %></a>
