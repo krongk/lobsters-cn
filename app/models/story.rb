@@ -7,6 +7,7 @@ class Story < ActiveRecord::Base
   has_many :comments
   has_many :tags, :through => :taggings
   has_many :assets
+
   accepts_nested_attributes_for :assets, :allow_destroy => true
   validates_length_of :title, :in => 3..150
   validates_length_of :description, :maximum => (64 * 1024)
@@ -288,12 +289,10 @@ class Story < ActiveRecord::Base
         tagging.mark_for_destruction
       end
     end
-
     new_tag_names_a.each do |tag_name|
-      puts '----------------------'
-
-      puts self.tags
-      if tag_name.to_s != "" && !self.tags.map(&:tag).include?(tag_name)
+      ##xj: ignore the error: activeRecord::ConfigurationError: Association named 'tag' was not found
+      #if tag_name.to_s != "" && !self.tags.map(&:tag).include?(tag_name)
+      if tag_name.to_s != "" && !self.taggings.map{|t| t.tag.tag }.include?(tag_name)
         if t = Tag.find_by_tag(tag_name)
           # we can't lookup whether the user is allowed to use this tag yet
           # because we aren't assured to have a user_id by now; we'll do it in
