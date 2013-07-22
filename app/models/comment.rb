@@ -36,13 +36,13 @@ class Comment < ActiveRecord::Base
 
   validate do
     self.comment.to_s.strip == "" &&
-      errors.add(:comment, "cannot be blank.")
+      errors.add(:comment, "不能为空.")
 
     self.user_id.blank? &&
-      errors.add(:user_id, "cannot be blank.")
+      errors.add(:user_id, "不能为空.")
 
     self.story_id.blank? &&
-      errors.add(:story_id, "cannot be blank.")
+      errors.add(:story_id, "不能为空.")
 
     (m = self.comment.to_s.strip.match(/\A(t)his([\.!])?$\z/i)) &&
       errors.add(:base, (m[1] == "T" ? "N" : "n") + "ope" + m[2].to_s)
@@ -113,9 +113,9 @@ class Comment < ActiveRecord::Base
 
   def gone_text
     if self.is_moderated?
-      "Thread removed by moderator " <<
+      "该线索被会长删除， " <<
         self.moderation.try(:moderator).try(:username).to_s << ": " <<
-        (self.moderation.try(:reason) || "No reason given")
+        (self.moderation.try(:reason) || "没有说明原因")
     else
       "评论已被移除"
     end
@@ -139,15 +139,15 @@ class Comment < ActiveRecord::Base
 
           if u.pushover_mentions? && u.pushover_user_key.present?
             Pushover.push(u.pushover_user_key, u.pushover_device, {
-              :title => "Lobsters mention by #{self.user.username} on " <<
+              :title => "提醒：#{self.user.username} 关于 " <<
                 self.story.title,
               :message => self.plaintext_comment,
               :url => self.url,
-              :url_title => "Reply to #{self.user.username}",
+              :url_title => "回复#{self.user.username}",
             })
           end
         rescue => e
-          Rails.logger.error "failed to deliver mention notification to " <<
+          Rails.logger.error "失败，当尝试发送提醒 " <<
             "#{u.username}: #{e.message}"
         end
       end
@@ -164,15 +164,15 @@ class Comment < ActiveRecord::Base
 
         if u.pushover_replies? && u.pushover_user_key.present?
           Pushover.push(u.pushover_user_key, u.pushover_device, {
-            :title => "Lobsters reply from #{self.user.username} on " <<
-              "#{self.story.title}",
+            :title => "来自#{self.user.username} 关于 " <<
+              "#{self.story.title}的回复",
             :message => self.plaintext_comment,
             :url => self.url,
-            :url_title => "Reply to #{self.user.username}",
+            :url_title => "回复#{self.user.username}",
           })
         end
       rescue => e
-        Rails.logger.error "failed to deliver reply notification to " <<
+        Rails.logger.error "失败，当尝试发送提醒 " <<
           "#{u.username}: #{e.message}"
       end
     end
@@ -189,7 +189,7 @@ class Comment < ActiveRecord::Base
       m = Moderation.new
       m.comment_id = self.id
       m.moderator_user_id = user.id
-      m.action = "deleted comment"
+      m.action = "删除评论"
       m.save
     end
 
@@ -211,7 +211,7 @@ class Comment < ActiveRecord::Base
         m = Moderation.new
         m.comment_id = self.id
         m.moderator_user_id = user.id
-        m.action = "undeleted comment"
+        m.action = "恢复评论"
         m.save
       end
     end
@@ -290,8 +290,8 @@ class Comment < ActiveRecord::Base
       cs = [ "story_id = ?", story_id ]
     end
 
-    Comment.find(:all, :conditions => cs, :order => "confidence DESC",
-    :include => :user).each do |c|
+    #Comment.find(:all, :conditions => cs, :order => "confidence DESC",:include => :user).each do |c|
+    Comment.includes(:user).where(cs).order("confidence DESC").each do |c|
       (parents[c.parent_comment_id.to_i] ||= []).push c
     end
 

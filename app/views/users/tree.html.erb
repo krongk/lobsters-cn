@@ -1,5 +1,5 @@
 <div class="box wide">
-  <strong>用户列表 (<%= User.count %>)</strong>
+  <strong>会员列表 (<%= User.count %>)</strong>
   <p>
   <% prev_level = 0 %>
   <% @tree.each do |u| %>
@@ -18,7 +18,7 @@
       <% if u[:is_admin] %>
         (管理员)
       <% elsif u[:is_moderator] %>
-        (会员)
+        (会长)
       <% end %>
 
     <% prev_level = u[:level] %>

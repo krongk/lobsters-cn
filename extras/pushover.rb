@@ -1,8 +1,12 @@
+#encoding: utf-8
 class Pushover
   cattr_accessor :API_KEY
 
   # this needs to be overridden in config/initializers/production.rb
   @@API_KEY = nil
+
+  #xj: lazy added
+  @@API_KEY = "eykBeBnYTwintxK1mUbGooSpCgCh7u"
 
   def self.push(user, device, params)
     if !@@API_KEY
@@ -23,7 +27,7 @@ class Pushover
         :device => device
       }.merge(params))
     rescue => e
-      Rails.logger.error "error sending to pushover: #{e.inspect}"
+      Rails.logger.error "发送到pushover失败: #{e.inspect}"
     end
   end
 end

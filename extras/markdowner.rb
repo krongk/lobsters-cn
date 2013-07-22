@@ -28,7 +28,7 @@ class Markdowner
     }
 
     # make links have rel=nofollow
-    html.gsub!(/<a href/, "<a rel=\"nofollow\" href")
+    html.gsub!(/<a href/, "<a rel=\"nofollow\" target=\"_blank\" href")
 
     if !opts[:disable_profile_links]
       # make @username link to that user's profile
