@@ -7,7 +7,7 @@ class Asset < ActiveRecord::Base
   { 
     :storage => :upyun, 
     # Set any other options according to paperclip
-    :styles => { :small => "40x40>" }
+    :styles => { :small => "160x160#" }
   }
 
   ##This is for dropbox

@@ -243,6 +243,7 @@ div#inside {
 	padding: 1px;
 	margin-left: 4px;
 	margin-right: 11px;
+	margin-top: -4px;
 }
 
 #header h1 {
@@ -275,7 +276,7 @@ div#inside {
 .headerlinks-left a {
 	color: #777;
 	text-decoration: none;
-	padding: 0.5em;
+	padding: 0.35em 0.5em;
 	font-size: 1.2em;
 }
 .headerlinks-left a:hover {
@@ -514,10 +515,6 @@ li div.details,
 div.story_content {
 	margin-left: 40px;
 	margin-right: 40px;
-}
-
-li div.img_details{
-	margin-left: 85px;
 }
 
 div.story_content {
@@ -1227,11 +1224,4 @@ input[type="submit"] {
 .assets_show img{
   min-width: 0;
   max-width: 700px;
- }
-
- .voters .img img{
-  	min-width: 0;
-  	max-width: 40px;
-  	margin-top: 0px;
-  	margin-bottom: -25px;
  }

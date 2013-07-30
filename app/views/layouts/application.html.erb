@@ -26,6 +26,31 @@
       -->
     </style>
   <% end %>
+  <% if !(7..19).include?(Time.now.hour)%>
+    <style type="text/css">
+      <!--
+      body{
+        background-color:black;
+        background-image:
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+        radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+        background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+        background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+      }
+      div#wrapper {
+        background-color: #fff;
+        filter:alpha(opacity=90);            /* 用于IE浏览器－透明度为20%*/
+        -moz-opacity:0.9;                    /* 用于Moz + Firefox－透明度为20%*/
+        opacity: 0.9;                        /* 用于支持CSS3的浏览器－透明度为20%*/
+        -moz-border-radius: 15px;             /* 圆角边框*/
+　　    border-radius: 15px;
+      }
+      -->
+    </style>
+  <% end %>
+
   <% if @rss_link %>
     <%= raw(@rss_link) %>
   <% end %>
@@ -34,6 +59,7 @@
       Lobsters.curUser = '<%= @user.id %>';
     </script>
   <% end %>
+  <%= yield(:head) %>
 </head>
 <body>
   <div id="wrapper">
@@ -46,6 +72,7 @@
         <% links = {
           "/" => "首页",
           "/newest" => "最新",
+          "/photo" => "照片墙",
           "/comments" => "评论"
         } %>
 

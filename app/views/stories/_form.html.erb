@@ -21,7 +21,7 @@
   </div>
 
   <div class="boxline" style="margin-bottom: 2px;">
-  <%= f.label :tags_a, "标签(必选):", :class => "required",
+  <%= f.label :tags_a, "标签*:", :class => "required",
     :style => "line-height: 2.3em;" %>
   <%= f.select "tags_a", options_for_select(
     Tag.all_with_filtered_counts_for(@user).map{|t|
@@ -36,9 +36,7 @@
   <div class="boxline">
     <%= f.label :description, "内容:", :class => "required" %>
     <%= f.text_area :description, :rows => 15,
-      :placeholder => %{如果是转载链接,则内容可选填;
-        如何发布文章请参考下面的【使用教程】；\n
-        内容排版请参考下面的【Markdown语法介绍】},
+      :placeholder => %{如果是转载外部链接, 则此内容可选填},
       :autocomplete => "off" %>
   </div>
 

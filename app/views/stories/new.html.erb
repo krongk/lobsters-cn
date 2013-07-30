@@ -12,8 +12,8 @@
 
       <div class="box">
         <div class="boxline markdown_help_toggler">
-          <a href="#" id="story_guidelines_toggler">
-            使用教程
+          <a href="#" id="story_guidelines_toggler" style="float: right; color: #666;">
+            阅读教程
           </a>
           <div id="story_guidelines" style="<%= @user && @user.stories_submitted_count > 2 ? "display: none;" : "" %>">
             
@@ -65,9 +65,8 @@
           <div class="markdown_help_label">
             Markdown 语法介绍
           </div>
-
-          <%= submit_tag " 提交报道 " %>
-
+         
+          <%= submit_tag " 提交报道 ", data: { disable_with: "正在上传..." } %>
           &nbsp;
           <button type="button" class="story-preview">预览</button>
 

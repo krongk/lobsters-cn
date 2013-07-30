@@ -13,6 +13,11 @@ Lobsters::Application.routes.draw do
   get "/newest/:user" => "home#newest_by_user"
   get "/newest/:user/page/:page" => "home#newest_by_user"
 
+  get "/photo(.format)" => "home#photo"
+  get "/photo/page/:page" => "home#photo"
+  get "/photo/:user" => "home#photo_by_user"
+  get "/photo/:user/page/:page" => "home#photo_by_user"
+  
   get "/threads" => "comments#threads"
   get "/threads/:user" => "comments#threads"
 
