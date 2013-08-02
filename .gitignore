@@ -21,7 +21,8 @@
 vendor/bundle
 public/assets
 public/system
-
+public/p.html
+public/p/
 # files added in production
 lib/tasks/deploy.rake
 config/initializers/domain.rb

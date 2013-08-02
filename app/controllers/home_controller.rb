@@ -1,7 +1,9 @@
 #encoding: utf-8
 class HomeController < ApplicationController
   STORIES_PER_PAGE = 20
+  ASSETS_PER_PAGE = 24
 
+  caches_page :p
   # for rss feeds, load the user's tag filters if a token is passed
   before_filter :find_user_from_rss_token, :only => [ :index, :newest ]
 
@@ -89,42 +91,33 @@ class HomeController < ApplicationController
     end
   end
 
-  def photo
-    @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
-      nil, false, nil)
+  def p
+    @page = 1
+    if params[:page].to_i > 0
+      @page = params[:page].to_i
+    end
 
-    @heading = @title = "图片墙"
-    @cur_url = "/photo"
+    @assets = Asset.find(
+      :all,
+      :limit => ASSETS_PER_PAGE + 1,
+      :offset => ((@page - 1) * ASSETS_PER_PAGE),
+      :order => ("created_at DESC")
+    )
 
-    @rss_link = "<link rel=\"alternate\" type=\"application/rss+xml\" " <<
-      "title=\"RSS 2.0 - Newest Items\" href=\"/photo.rss" <<
-      (@user ? "?token=#{@user.rss_token}" : "") << "\" />"
+    @show_more = false
+
+    if @assets.count > ASSETS_PER_PAGE
+      @show_more = true
+      @assets.pop
+    end
+
+    @heading = @title = "照片墙"
+    @cur_url = "/p"
 
     respond_to do |format|
-      format.html { render :action => "photo" }
-      format.rss {
-        if @user && params[:token].present?
-          @title += " - #{@user.username}"
-        end
-
-        render :action => "rss", :layout => false
-      }
-      format.json { render :json => @stories }
+      format.html { render :action => "p" }
+      format.json { render :json => @assets }
     end
-  end
-
-  def photo_by_user
-    for_user = User.find_by_username!(params[:user])
-
-    @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
-      nil, false, for_user.id)
-
-    @heading = @title = "#{for_user.username}的图片"
-    @cur_url = "/photo/#{for_user.username}"
-
-    @for_user = for_user.username
-
-    render :action => "photo"
   end
 
 private

@@ -14,18 +14,16 @@
 </div>
 
 <div id="links">
-<% @stories.each do |story| %>
-  <% story.assets.each do |asset| %>
-    <%= link_to image_tag(asset.asset.url(:small), :alt => story.url, :title => story.title), asset.asset.url %>
-  <% end %>
+<% @assets.each do |asset| %>
+  <%= link_to image_tag(asset.asset.url(:small)), asset.asset.url %>
 <% end %>
 </div>
 
 <div class="morelink">
   <% if @page && @page > 1 %>
     <a href="<%= @tag ? "/t/#{@tag.tag}" : (@newest ? "/newest" +
-      (@for_user ? "/#{@for_user}" : "") : "") %><%= @page == 2 ? "/" :
-      "/photo/page/#{@page - 1}" %>">&lt;&lt; 分页 <%= @page - 1 %></a>
+      (@for_user ? "/#{@for_user}" : "") : "") %><%= @page == 2 ? "/p" :
+      "/p/page/#{@page - 1}" %>">&lt;&lt; 分页 <%= @page - 1 %></a>
   <% end %>
 
   <% if @show_more %>
@@ -33,7 +31,7 @@
       |
     <% end %>
     <a href="<%= @tag ? "/t/#{@tag.tag}" : (@newest ? "/newest" +
-      (@for_user ? "/#{@for_user}" : "") : "") %>/photo/page/<%= @page + 1 %>">分页
+      (@for_user ? "/#{@for_user}" : "") : "") %>/p/page/<%= @page + 1 %>">分页
       <%= @page + 1 %> &gt;&gt;</a>
   <% end %>
 </div>

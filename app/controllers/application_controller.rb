@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   TRAFFIC_DECREMENTER = 0.15
 
+  self.page_cache_directory = Rails.public_path
+  
   def authenticate_user
     if session[:u]
       @user = User.find_by_session_token(session[:u].to_s)
