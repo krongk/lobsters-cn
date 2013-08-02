@@ -192,8 +192,8 @@ var _Lobsters = Class.extend({
       return;
 
     var old_value = button.val();
-    button.prop("disabled", true);
     button.val("正在加载...");
+    button.prop("disabled", true);
 
     $.post("/stories/fetch_url_title", {
       fetch_url: url_field.val(),
@@ -243,7 +243,7 @@ $(document).ready(function() {
     return Lobsters.moderateStory(this);
   }),
 
-  $("a.comment_replier").on("click", function() {
+  $("a.comment_replier").live("click", function() {
     if (!Lobsters.curUser) {
       Lobsters.bounceToLogin();
       return false;
@@ -268,18 +268,18 @@ $(document).ready(function() {
     return false;
   });
 
-  $("button.comment-cancel").on("click", function() {
+  $("button.comment-cancel").live("click", function() {
     $(this).parents("div.comment_reply form").remove();
   });
 
-  $("a.comment_editor").on("click", function() {
+  $("a.comment_editor").live("click", function() {
     var li = $(this).parents("li.comment").first();
     li.load("/comments/" + $(li).attr("data-shortid") + "/edit",
       { "edit": 1 });
   });
 
-  $("a.comment_deletor").on("click", function() {
-    if (confirm("确定要删除该评论么?")) {
+  $("a.comment_deletor").live("click", function() {
+    if (confirm("确定要删除此评论吗?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/delete",
       function(d) {
@@ -288,8 +288,8 @@ $(document).ready(function() {
     }
   });
 
-  $("a.comment_undeletor").on("click", function() {
-    if (confirm("确定要恢复该评论么?")) {
+  $("a.comment_undeletor").live("click", function() {
+    if (confirm("确定要删除此评论吗?")) {
       var li = $(this).parents("li.comment").first();
       $.post("/comments/" + $(li).attr("data-shortid") + "/undelete",
       function(d) {
@@ -308,18 +308,17 @@ $(document).ready(function() {
   });
 
   /* TODO: jquery says live() is slow and bad, what is supposed to be used? */
-  $("div.markdown_help_toggler .markdown_help_label").on("click",
+  $("div.markdown_help_toggler .markdown_help_label").live("click",
   function() {
     $(this).parents("div.markdown_help_toggler").first().
       children(".markdown_help").toggle();
   });
 
-  $("button.comment-post").on("click", function() {
+  $("button.comment-post").live("click", function() {
     Lobsters.postComment($(this).parents("form").first());
   });
-  //To exactly match $("a.foo").on("click", fn), 
-  //for example, you can write $(document).on("click", "a.foo", fn)
-  $("button.comment-preview").on("click", function() {
+
+  $("button.comment-preview").live("click", function() {
     Lobsters.previewComment($(this).parents("form").first());
   });
 });

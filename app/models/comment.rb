@@ -260,6 +260,14 @@ class Comment < ActiveRecord::Base
     self.confidence = self.calculated_confidence
   end
 
+  def assign_thread_id
+    if self.parent_comment_id.present?
+      self.thread_id = self.parent_comment.thread_id
+    else
+      self.thread_id = Keystore.incremented_value_for("thread_id")
+    end
+  end
+  
   def unassign_votes
     self.story.update_comment_count!
   end

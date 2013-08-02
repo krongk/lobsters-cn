@@ -16,7 +16,8 @@ gem 'actionpack-action_caching', '1.0.0'
 
 gem "mysql2", '0.3.13'
 
-gem "jquery-rails", "2.2.1"
+#xj: keep the jquery version 1.8.3 to bugfix the nested comment post.
+gem "jquery-rails", "2.1.4"
 
 # To use ActiveModel has_secure_password
 gem "bcrypt-ruby", "3.0.0"
