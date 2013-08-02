@@ -29,7 +29,15 @@ class User < ActiveRecord::Base
     :pushover_mentions
 
   before_save :check_session_token
-  after_create :create_default_tag_filters, :create_rss_token
+
+  before_validation :on => :create do
+    self.create_rss_token
+    self.create_mailing_list_token
+  end
+  after_create :create_default_tag_filters
+
+  BANNED_USERNAMES = [ "admin", "administrator", "hostmaster", "mailer-daemon",
+    "postmaster", "root", "security", "support", "webmaster", ]
 
   def as_json(options = {})
     h = super(:only => [
@@ -49,6 +57,14 @@ class User < ActiveRecord::Base
       "images/1x1t.gif") << "&s=100"
   end
 
+  def average_karma
+    if (k = self.karma) == 0
+      0
+    else
+      k.to_f / (self.stories_submitted_count + self.comments_posted_count)
+    end
+  end
+
   def check_session_token
     if self.session_token.blank?
       self.session_token = Utils.random_str(60)
@@ -64,6 +80,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def create_mailing_list_token
+    if self.mailing_list_token.blank?
+      self.mailing_list_token = Utils.random_str(10)
+    end
+  end
+
   def create_rss_token
     if self.rss_token.blank?
       self.rss_token = Utils.random_str(60)
@@ -74,31 +96,41 @@ class User < ActiveRecord::Base
     Keystore.value_for("user:#{self.id}:unread_messages").to_i
   end
 
-  def update_unread_message_count!
-    Keystore.put("user:#{self.id}:unread_messages",
-      Message.where(:recipient_user_id => self.id,
-        :has_been_read => false).count)
+  def comments_posted_count
+    Keystore.value_for("user:#{self.id}:comments_posted").to_i
   end
 
   def karma
     Keystore.value_for("user:#{self.id}:karma").to_i
   end
 
-  def average_karma
-    if self.karma == 0
-      0
+  def linkified_about
+    # most users are probably mentioning "@username" to mean a twitter url, not
+    # a link to a profile on this site
+    Markdowner.to_html(self.about, { :disable_profile_links => true })
+  end
+
+  def most_common_story_tag
+    tag_id = Tagging.connection.select_one("SELECT tag_id, " <<
+      "COUNT(taggings.id) AS tag_count FROM taggings LEFT OUTER JOIN " <<
+      "stories ON stories.id = taggings.story_id WHERE stories.user_id = " <<
+      "#{q(self.id)} GROUP BY tag_id ORDER BY tag_count DESC LIMIT 1")
+
+    if tag_id && tag_id["tag_id"]
+      Tag.where(:id => tag_id["tag_id"]).first
     else
-      self.karma.to_f / (self.stories_submitted_count +
-        self.comments_posted_count)
+      nil
     end
+  end
+
+  def recent_threads(amount)
+    Comment.connection.select_all("SELECT DISTINCT " +
+      "thread_id FROM comments WHERE user_id = #{q(self.id)} ORDER BY " +
+      "created_at DESC LIMIT #{q(amount)}").map{|r| r.values.first }
   end
 
   def stories_submitted_count
     Keystore.value_for("user:#{self.id}:stories_submitted").to_i
-  end
-
-  def comments_posted_count
-    Keystore.value_for("user:#{self.id}:comments_posted").to_i
   end
 
   def undeleted_received_messages
@@ -122,9 +154,9 @@ class User < ActiveRecord::Base
     Markdowner.to_html(self.about, { :disable_profile_links => true })
   end
 
-  def recent_threads(amount)
-    Comment.connection.select_all("SELECT DISTINCT " +
-      "thread_id FROM comments WHERE user_id = #{q(self.id)} ORDER BY " +
-      "created_at DESC LIMIT #{q(amount)}").map{|r| r.values.first }
+  def update_unread_message_count!
+    Keystore.put("user:#{self.id}:unread_messages",
+      Message.where(:recipient_user_id => self.id,
+        :has_been_read => false).count)
   end
 end

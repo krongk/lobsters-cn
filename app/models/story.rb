@@ -22,7 +22,8 @@ class Story < ActiveRecord::Base
 
   attr_accessible :title, :description, :tags_a, :moderation_reason, :assets_attributes
 
-  before_create :assign_short_id
+  before_validation :assign_short_id,
+    :on => :create
   before_save :log_moderation
   after_create :mark_submitter
 
@@ -343,7 +344,7 @@ class Story < ActiveRecord::Base
       u = m[1] << (params.any?? "?" << params.join("&") : "")
     end
 
-    self[:url] = u
+    self[:url] = u.to_s.strip
   end
 
   def url_or_comments_url

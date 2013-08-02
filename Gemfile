@@ -36,6 +36,7 @@ gem "nokogiri"
 gem "htmlentities"
 
 gem "rdiscount", "2.1.6"
+gem "oauth"
 
 gem "thinking-sphinx", "2.0.12"
 
@@ -51,6 +52,7 @@ gem "therubyracer", ">= 0.11.3", :group => :assets, :platform => :ruby, :require
 #pagination for admin
 gem 'will_paginate', '3.0.4'
 
-#gem "paperclip-dropbox", ">= 1"
 gem "paperclip", :git => 'git://github.com/thoughtbot/paperclip.git'
 gem "upyun-paperclip", :git => 'git://github.com/frankel/upyun-paperclip.git'
+# dropbox is too slow than upyun
+#gem "paperclip-dropbox", ">= 1"

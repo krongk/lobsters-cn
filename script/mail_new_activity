@@ -9,6 +9,14 @@ Rails.application.require_environment!
 
 class String
   def force_to_ascii
+    # fixup some "smart" quotes and things instead of forcing them to "?" chars
+    gsub("\u201C", '"').
+    gsub("\u201D", '"').
+    gsub("\u2018", "'").
+    gsub("\u2019", "'").
+    gsub("\u2013", "-").
+    gsub("\u2014", "--").
+    gsub("\u2026", "...").
     encode("us-ascii", :invalid => :replace, :undef => :replace,
       :replace => "?")
   end
@@ -40,8 +48,13 @@ mailing_list_users = User.where(:mailing_list_enabled => true)
 
 last_story_id = (Keystore.value_for(LAST_STORY_KEY) || Story.last.id).to_i
 
-Story.where("id > ?", last_story_id).order(:id).each do |s|
+Story.where("id > ? AND is_expired = ?", last_story_id, false).order(:id).each do |s|
   s.fetch_story_cache!
+
+  if s.story_cache.blank?
+    s.fetch_story_cache!
+  end
+
   s.save
 
   mailing_list_users.each do |u|
@@ -105,7 +118,8 @@ Keystore.put(LAST_STORY_KEY, last_story_id)
 last_comment_id = (Keystore.value_for(LAST_COMMENT_KEY) ||
   Comment.last.id).to_i
 
-Comment.where("id > ?", last_comment_id).order(:id).each do |c|
+Comment.where("id > ? AND (is_deleted = ? AND is_moderated = ?)",
+last_comment_id, false, false).order(:id).each do |c|
   mailing_list_users.each do |u|
     if (c.story.tags.map{|t| t.id } & u.tag_filters.map{|t| t.tag_id }).any?
       next

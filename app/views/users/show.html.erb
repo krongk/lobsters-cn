@@ -19,7 +19,7 @@
 
   <label class="required">加入时间:</label>
   <span class="d">
-    <%= raw(time_ago_in_words_label(@showing_user.created_at)) %>
+    <%= raw(time_ago_in_words_label(@showing_user.created_at)) %> ago
     <% if @showing_user.invited_by_user %>
       前, 受邀于
       <a href="/u/<%= @showing_user.invited_by_user.username %>"><%=
@@ -40,8 +40,14 @@
 
   <label class="required">提交报道:</label>
   <span class="d">
+    <% tag = @showing_user.most_common_story_tag %>
     <a href="/newest/<%= @showing_user.username %>"><%=
-      @showing_user.stories_submitted_count %></a>
+      @showing_user.stories_submitted_count %></a><%= tag ? ", " : "" %>
+    <% if tag %>
+      most commonly tagged <a href="<%= tag_url(tag.tag) %>"
+        class="tag tag_<%= tag.tag %>" title="<%= tag.description %>"><%=
+        tag.tag %></a>
+    <% end %>
   </span>
   <br>
 
@@ -55,6 +61,10 @@
   <label class="required">自我介绍:</label>
 
   <div id="user_about" class="shorten_first_p">
-    <%= raw @showing_user.linkified_about %>
+    <% if @showing_user.about.present? %>
+      <%= raw @showing_user.linkified_about %>
+    <% else %>
+      <span class="na">A mystery...</span>
+    <% end %>
   </div>
 </div>

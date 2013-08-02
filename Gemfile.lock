@@ -73,6 +73,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+<<<<<<< HEAD
     mime-types (1.23)
     mini_portile (0.5.1)
     minitest (4.7.5)
@@ -80,6 +81,12 @@ GEM
     mysql2 (0.3.13)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+=======
+    mime-types (1.21)
+    multi_json (1.7.1)
+    nokogiri (1.5.6)
+    oauth (0.4.7)
+>>>>>>> 5c0dad2c4a06b653da07568bb8ef3c951f4328d5
     polyglot (0.3.3)
     protected_attributes (1.0.3)
       activemodel (>= 4.0.0, < 5.0)
@@ -167,12 +174,19 @@ DEPENDENCIES
   machinist
   mysql2 (= 0.3.13)
   nokogiri
+<<<<<<< HEAD
   paperclip!
   protected_attributes (= 1.0.3)
   rails (= 4.0.0)
   rails-observers (= 0.1.2)
   rake (= 10.1.0)
   rdiscount (= 2.1.6)
+=======
+  oauth
+  rails (= 3.2.13)
+  rake (= 10.0.3)
+  rdiscount
+>>>>>>> 5c0dad2c4a06b653da07568bb8ef3c951f4328d5
   rspec-rails (~> 2.6)
   therubyracer (>= 0.11.3)
   thinking-sphinx (= 2.0.12)
