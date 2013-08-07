@@ -1,5 +1,5 @@
 #encoding: utf-8
-u = User.new(:username => "inruby", :email => "master@inruby.com", :password => "password")
+u = User.new(:username => "inruby", :email => "master@inruby.com", :password => "password", :password_confirmation => "password")
 u.is_admin = true
 u.is_moderator = true
 u.save

@@ -22,7 +22,7 @@
       </div>
 
       <%= button_tag "#{comment.new_record?? "添加" : "更新"}评论",
-        :class => "comment-post", :type => "button" %>
+        :class => "comment-post", :type => "button", data: { disable_with: "正在上传..." } %>
       &nbsp;
       <%= button_tag "预览", :class => "comment-preview",
         :type => "button" %>
