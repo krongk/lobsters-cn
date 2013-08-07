@@ -16,6 +16,8 @@ class StoriesController < ApplicationController
     @story = Story.new(params[:story].reject{|k,v| k == "url" })
     @story.url = params[:story][:url]
     @story.user_id = @user.id
+    #markdown keep blank
+    @story.description = @story.description.gsub(/\n+/, "\n\n") unless @story.description.blank?
 
     if @story.save
       Vote.vote_thusly_on_story_or_comment_for_user_because(1, @story.id,

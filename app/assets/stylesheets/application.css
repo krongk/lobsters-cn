@@ -13,14 +13,18 @@ html {
 }
 
 body, textarea, input, button {
-	font-family: "helvetica neue", arial, sans-serif;
-	font-size: 9.5pt;
+	font-family: 宋体, "微软雅黑", arial, sans-serif;
+	font-size: 11pt;
 	color: #333;
 }
 
 a {
 	color: #2562dc;
 	cursor: pointer;
+}
+
+img{
+	border:none;
 }
 
 ol.stories.list li.story div.details span.link a:visited {
@@ -31,7 +35,7 @@ h1 {
 	margin: 0px;
 	margin-bottom: 0.75em;
 	padding: 0px;
-	font-size: 14pt;
+	font-size: 15pt;
 	font-weight: bold;
 }
 
@@ -221,10 +225,31 @@ div#wrapper {
 	max-width: 1000px;
 }
 div#inside {
-	margin-left: 0.25em;
-	margin-right: 0.25em;
+	clear: both;
+	display: block;
 }
-
+div#inside-left{
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	text-align: left;
+}
+div#inside-left-content{
+	display: block;
+	position: relative;
+	text-align: left;
+}
+div#inside-right{
+	width: auto;
+	margin-left: 75%;
+	margin-right: 0;
+}
+div#inside-right-content{
+	display: block;
+	position: relative;
+	text-align: right;
+}
 
 /* header */
 
@@ -527,6 +552,10 @@ div.story_content {
 	margin-bottom: 3em;
 }
 
+div.morelink{
+	border-top: 1px solid #d0d0d0;
+	padding-top: 10px;
+}
 div.morelink,
 div.page_link_buttons {
 	margin-top: 1.5em;

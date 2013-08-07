@@ -151,4 +151,10 @@
 	    box-shadow: 3px 3px 6px #ddd;  
 	    background-color: rgba(0,0,0,0.8);  
 	 }
+	div#inside-right{
+		text-align: left;
+		margin-left: -1%;
+		margin-right: 10%;
+	}
+
 }

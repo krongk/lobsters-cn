@@ -135,7 +135,23 @@
         <div class="flash-success"><%= flash[:success] %></div>
       <% end %>
 
-      <%= yield %>
+      <% if ['home', 'stories', 'comments'].include?(params[:controller]) && ['index', 'show'].include?(params[:action]) %>
+        <div id="inside-left"><div id="inside-left-content">
+          <%= yield %>
+        </div></div>
+
+        <div id="inside-right"><div id="inside-right-content">
+          <div id="user_apply">
+            <%=link_to image_tag("/assets/apply.png"), "https://jinshuju.net/f/qFw1mq", :target => "_blank" %>
+          </div>
+          <br>
+          <div id="QQ_list">
+            <!--以下是QQ邮件列表订阅嵌入代码--><a target="_blank" href="http://list.qq.com/cgi-bin/qf_invite?id=df300606a2516bd8966cc66a96d20ceec80fcacca711cf0c"><img border="0" alt="填写您的邮件地址，订阅我们的精彩内容：" src="http://rescdn.list.qq.com/zh_CN/htmledition/images/qunfa/manage/picMode_light_l.png" /></a>
+          </div>
+        </div></div>
+      <% else %>
+        <%= yield %>
+      <% end %>
     </div>
   </div>
 </body>
