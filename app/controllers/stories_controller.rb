@@ -67,7 +67,7 @@ class StoriesController < ApplicationController
     end
 
     @title = "修改报道"
-    5.times{ @story.assets.build }
+    1.times{ @story.assets.build } unless @story.assets.any?
   end
 
   def fetch_url_title

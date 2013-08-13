@@ -1263,3 +1263,16 @@ input[type="submit"] {
   font-size: 12px;
   line-height: 25px;
 }
+.boxline-photos{
+	margin-left: 100px;
+}
+.boxline-delete-photo{
+	float: left;
+	padding: 0;
+	margin: 4px;
+}
+.boxline-delete-photo img{
+	width: 80px;
+	height: 80px;
+	border: 1px solid #ccc;
+}

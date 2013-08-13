@@ -44,9 +44,23 @@
     <div class="boxline">
       <%= f.label :asset, "添加图片:" %>
       <%= asset_form.file_field :asset %>
-      <%= asset_form.file_field :note %>
+      <%= asset_form.text_field :note %>
     </div>
   <% end %> -->
+
+  <div class="boxline-photos">
+  <% @story.assets.each do |asset| %>
+    <% if asset.id? %>
+      <%= f.fields_for :assets, asset do |asset_fields| %>
+      <div class="boxline-delete-photo">
+        <%= image_tag(asset.asset.url(:small)) %><br>
+        <%= asset_fields.check_box :_destroy %>删除
+      </div>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
+
   <div id="image_holder_0"></div>
   <div class="boxline">
     <label for="story_assets">&nbsp;</label>
