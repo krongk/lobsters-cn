@@ -44,6 +44,7 @@
     <div class="boxline">
       <%= f.label :asset, "添加图片:" %>
       <%= asset_form.file_field :asset %>
+      <%= asset_form.file_field :note %>
     </div>
   <% end %> -->
   <div id="image_holder_0"></div>
@@ -64,7 +65,7 @@
     //add image
     $("#add_image").click(function(){
       var i = parseInt($(this).val());
-      $("#image_holder_"+ i).html('<div class="boxline"><label for="story_asset">&nbsp;</label><input id="story_assets_attributes_'+i+'_asset" name="story[assets_attributes]['+i+'][asset]" type="file" /></div><div id="image_holder_'+(i+1)+'"></div>');
+      $("#image_holder_"+ i).html('<div class="boxline"><label for="story_asset">&nbsp;</label><input id="story_assets_attributes_'+i+'_asset" name="story[assets_attributes]['+i+'][asset]" type="file" /><input class="story_assets_attributes_note" placeholder="图片说明" id="story_assets_attributes_'+i+'_note" name="story[assets_attributes]['+i+'][note]" type="input" /></div><div id="image_holder_'+(i+1)+'"></div>');
       $(this).val(i + 1);
     });
   });

@@ -16,4 +16,12 @@ module ApplicationHelper
     label_tag(nil, time_ago_in_words(*args),
       :title => args.first.strftime("%F %T %z"))
   end
+
+  def meta_keywords(meta_keywords)
+    content_for(:meta_keywords){ meta_keywords}
+  end
+  def meta_description(meta_description)
+    content_for(:meta_description){ meta_description}
+  end
+  
 end

@@ -1,3 +1,6 @@
+<% meta_keywords [@story.user.username, @story.taggings.map{|t| t.tag.tag}.join(', ')].join(', ') %>
+<% meta_description [@story.title, " 作者：" + @story.user.username, " 发布时间: "+ @story.created_at.to_s(:db)].join(',') %>
+
 <ol class="stories">
 	<%= render :partial => "stories/listdetail",
     :locals => { :story => @story, :single_story => true } %>
@@ -11,9 +14,10 @@
   <% end %>
   <% @story.assets.each do |asset| %>
    <div class="assets_show">
-   <%= image_tag asset.asset.url, :alt => @story.url, :title => @story.title %></div>
+      <%= image_tag asset.asset.url, :alt => asset.note, :title => @story.title %>
+      <span class="assets_show_title"><%= asset.note %></span>
+   </div>
   <% end %>
-
 
   <p></p>
   <% if @user && !@story.is_gone? && !@story.previewing %>

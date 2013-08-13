@@ -13,7 +13,7 @@ class StoriesController < ApplicationController
     @cur_url = "/stories/new"
 
     # we don't allow the url to be changed, so we have to set it manually
-    @story = Story.new(params[:story].reject{|k,v| k == "url" })
+    @story = Story.new(params[:story].reject{|k,v| ["url","note"].include?(k) })
     @story.url = params[:story][:url]
     @story.user_id = @user.id
     #markdown keep blank
@@ -192,7 +192,7 @@ class StoriesController < ApplicationController
     @story.is_expired = false
     @story.editor_user_id = @user.id
 
-    @story.attributes = params[:story].except(:url)
+    @story.attributes = params[:story].except([:note, :url])
     if @story.url_is_editable_by_user?(@user)
       @story.url = params[:story][:url]
     end

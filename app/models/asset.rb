@@ -1,6 +1,6 @@
 class Asset < ActiveRecord::Base
   belongs_to :story
-  attr_accessible :asset
+  attr_accessible :asset, :note
 
   after_create :expire_cache
 
