@@ -26,8 +26,8 @@
           Markdown 语法介绍
         </div>
 
-        <%= submit_tag "保存" %>
-        &nbsp;or <a href="<%= story_url(@story.short_id) %>">取消编辑</a>
+        <%= submit_tag " 提交保存 ", data: { disable_with: "正在上传..." } %>
+        &nbsp;- <a href="<%= story_url(@story.short_id) %>">取消编辑</a>
 
         <div style="clear: both;"></div>
 
