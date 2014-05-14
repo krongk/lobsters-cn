@@ -77,7 +77,7 @@ Lobsters::Application.configure do
     :enable_starttls_auto => true,
     :address => "smtp.gmail.com",
     :port => 587,
-    :domain => "baoxian028.com",
+    :domain => "ymzg.org",
     :authentication => :login,
     :user_name => ENV["GMAIL_USERNAME"],
     :password => ENV["GMAIL_PASSWORD"]

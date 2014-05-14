@@ -83,7 +83,8 @@
             "/stories/new" => "随义分享" }) %>
         <% end %>
 
-        <% links.merge!({ "/search" => "搜索" }) %>
+        <%# links.merge!({ "/search" => "搜索" }) %>
+         <% links.merge!({ "http://www.ymzg.org" => "官网" }) %>
 
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&
         @heading.present? %>
@@ -143,7 +144,7 @@
 
   <footer class="footer">
     <div id="user_apply">
-      <%=link_to image_tag(asset_path("apply.png")), "https://jinshuju.net/f/qFw1mq", :target => "_blank" %>
+      <%=link_to image_tag(asset_path("apply.png")), "https://www.jinshuju.net/f/sEZyPe", :target => "_blank" %>
     </div>
     <br>
     <div id="QQ_list">

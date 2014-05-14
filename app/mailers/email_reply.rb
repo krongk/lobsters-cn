@@ -1,12 +1,12 @@
 class EmailReply < ActionMailer::Base
-  default :from => "nobody@lobste.rs"
+  default :from => "nobody@ymzg.org"
 
   def reply(comment, user)
     @comment = comment
     @user = user
 
-    mail(:to => user.email, :from => "Lobsters <nobody@lobste.rs>",
-      :subject => "[Lobsters] Reply from #{comment.user.username} on " <<
+    mail(:to => user.email, :from => "随义 <nobody@ymzg.org>",
+      :subject => "[随义] #{comment.user.username} 回复 " <<
       "#{comment.story.title}")
   end
 
@@ -14,8 +14,8 @@ class EmailReply < ActionMailer::Base
     @comment = comment
     @user = user
 
-    mail(:to => user.email, :from => "Lobsters <nobody@lobste.rs>",
-      :subject => "[Lobsters] Mention from #{comment.user.username} on " <<
+    mail(:to => user.email, :from => "随义 <nobody@ymzg.org>",
+      :subject => "[随义] #{comment.user.username} 提到 " <<
       "#{comment.story.title}")
   end
 end

@@ -4,7 +4,7 @@ class PasswordReset < ActionMailer::Base
     @user = user
     @ip = ip
 
-    mail(:to => user.email, :from => "yufuwu <kenrome@gmail.com>",
-      :subject => "[雨服务] 密码重置")
+    mail(:to => user.email, :from => "ymzg.org <kenrome@gmail.com>",
+      :subject => "[义梦中国.随义] 密码重置")
   end
 end

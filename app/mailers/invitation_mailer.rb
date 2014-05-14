@@ -4,7 +4,7 @@ class InvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     mail(:to => invitation.email,
-      :from => "yufuwu.org <kenrome@gmail.com>",
-      subject: "【雨服务】会员邀请函")
+      :from => "ymzg.org <kenrome@gmail.com>",
+      subject: "【义梦中国.随义】会员邀请函")
   end
 end

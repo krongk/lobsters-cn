@@ -13,4 +13,4 @@ User-Agent: msnbot
 Disallow: 
 
 User-agent: Baiduspider
-Disallow: /
+Allow: /
